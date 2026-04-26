@@ -1,0 +1,41 @@
+<!-- ============================================================
+  SAFENET Tag Component — snippet library
+  Non-interactive label for Contributing Factors on report cards.
+  Single variant — no hover, pressed, focus, or disabled states.
+
+  Two elements:
+    1. Tag        — green background, white text; primary scanning anchor.
+    2. +N more    — surface background, border, secondary text;
+                    de-emphasised overflow indicator.
+
+  Both use text-overline (11px/700/0.05em letter-spacing) + uppercase.
+  Uppercase transform is explicit — not baked into the token.
+
+  Contrast: on-action-primary on action-primary = 8.4:1 (WCAG AAA).
+  Source: DESIGN.md §12 Contrast Ratio Appendix.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  TAG
+  Use as: contributing factor label on report cards.
+  Content is the factor name — always uppercase per text-overline spec.
+=================================================================== -->
+<span class="inline-flex items-center py-space-1 px-space-2
+             bg-action-primary
+             text-overline text-on-action-primary uppercase">
+  COMMUNICATIONS
+</span>
+
+
+<!-- ===================================================================
+  "+N MORE" OVERFLOW INDICATOR
+  Shown after the first two tags when a report has more than two factors.
+  Same size and shape as a tag; visually de-emphasised so actual factor
+  tags remain the dominant scanning anchor.
+=================================================================== -->
+<span class="inline-flex items-center py-space-1 px-space-2
+             bg-surface border border-border-strong
+             text-overline text-text-secondary uppercase">
+  +2 MORE
+</span>

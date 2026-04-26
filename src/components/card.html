@@ -1,0 +1,64 @@
+<!-- ============================================================
+  SAFENET Report Card Component — snippet library
+  The tappable summary card on the home screen reports list.
+  Leads to the Report Detail screen on tap.
+
+  Layout (top to bottom):
+    1. Header row: Event Start Date + Time (left) | "View Report →" (right)
+    2. Incident Name
+    3. State · Fire Number · Jurisdiction (composite; Fire Number omitted if absent)
+    4. Narrative — 2-line truncated
+    5. Contributing Factors — tags at the bottom (up to 2; +N more if exceeded)
+
+  Semantics:
+    <a> wraps <article>. Interactive styling on <a>; content/padding on <article>.
+    "View Report →" is non-interactive label text inside the link, not a nested button.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  REPORT CARD — INTERACTIVE
+  Replace href="#" with the actual report URL at integration time.
+=================================================================== -->
+<a href="#"
+   class="block min-h-40 no-underline rounded-none
+          bg-surface-elevated border border-border shadow-raised
+          transition-colors
+          hover:bg-surface-container
+          active:bg-surface-container-pressed
+          focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+  <article class="p-space-5 flex flex-col">
+
+    <!-- Header row: date/time + CTA label -->
+    <div class="flex items-center justify-between">
+      <p class="text-caption text-text-secondary font-sans">04/14/2026 14:30</p>
+      <span class="text-body-sm text-action-primary font-sans">View Report →</span>
+    </div>
+
+    <!-- Incident Name -->
+    <h3 class="mt-space-4 text-heading-lg text-text-primary">Gifford Fire</h3>
+
+    <!-- Location composite line -->
+    <p class="mt-space-1 text-body text-text-primary">CA · CA-LPF-001234 · USFS</p>
+
+    <!-- Narrative — 2-line truncated -->
+    <p class="mt-space-3 text-body-sm text-text-secondary line-clamp-2">
+      Primary repeater on Pine Mountain offline 4+ hours; crews in drainage operating without command link. Workaround via secondary tac frequency only partially effective.
+    </p>
+
+    <!-- Tags row — Contributing Factors (up to 2; overflow as +N more) -->
+    <div class="mt-space-4 flex flex-wrap gap-space-2">
+      <span class="inline-flex items-center py-space-1 px-space-2
+                   bg-action-primary
+                   text-overline text-on-action-primary uppercase">
+        COMMUNICATIONS
+      </span>
+      <span class="inline-flex items-center py-space-1 px-space-2
+                   bg-action-primary
+                   text-overline text-on-action-primary uppercase">
+        EQUIPMENT
+      </span>
+    </div>
+
+  </article>
+</a>

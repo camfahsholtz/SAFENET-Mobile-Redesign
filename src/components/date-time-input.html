@@ -1,0 +1,169 @@
+<!-- ============================================================
+  SAFENET Date & Time Input Triggers — snippet library
+  Interaction pattern: tap button to open native OS picker.
+  These are styled <button> elements, NOT <input type="date|time">.
+  Native picker wiring happens at integration time via JavaScript.
+  Five states each: default, focused, filled, error, disabled.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  DATE TRIGGER
+  Use for: Event Start Date, Event Stop Date.
+  Placeholder: "Select date"
+  Filled: formatted as MM/DD/YYYY (e.g. 04/19/2026)
+=================================================================== -->
+
+<!-- Date — Default (empty) -->
+<div class="flex flex-col gap-space-1">
+  <label for="date-start-default" class="text-body text-text-primary">
+    Event Start Date<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="date-start-default"
+    aria-label="Select event start date"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-secondary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    Select date
+  </button>
+</div>
+
+<!-- Date — Filled (date selected) -->
+<div class="flex flex-col gap-space-1">
+  <label for="date-start-filled" class="text-body text-text-primary">
+    Event Start Date<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="date-start-filled"
+    aria-label="Event start date: April 19 2026. Tap to change."
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    04/19/2026
+  </button>
+</div>
+
+<!-- Date — Error -->
+<div class="flex flex-col gap-space-1">
+  <label for="date-start-error" class="text-body text-text-primary">
+    Event Start Date<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="date-start-error"
+    aria-label="Select event start date"
+    aria-describedby="date-start-error-msg"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-status-error
+           text-body text-text-secondary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    Select date
+  </button>
+  <p id="date-start-error-msg" class="text-body-sm text-status-error">
+    Event Start Date is required.
+  </p>
+</div>
+
+<!-- Date — Disabled -->
+<div class="flex flex-col gap-space-1">
+  <label for="date-stop-disabled" class="text-body text-text-disabled">
+    Event Stop Date
+  </label>
+  <button
+    type="button"
+    id="date-stop-disabled"
+    aria-label="Event stop date — not available"
+    disabled
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface-container border-0
+           text-body text-text-disabled text-left flex items-center
+           cursor-not-allowed">
+    Select date
+  </button>
+</div>
+
+
+<!-- ===================================================================
+  TIME TRIGGER
+  Use for: Event Start Time, Event Stop Time.
+  Placeholder: "Select time (HHMM)"
+  Filled: military 24-hour format, 4 digits (e.g. 1430)
+=================================================================== -->
+
+<!-- Time — Default (empty) -->
+<div class="flex flex-col gap-space-1">
+  <label for="time-start-default" class="text-body text-text-primary">
+    Event Start Time<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="time-start-default"
+    aria-label="Select event start time"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-secondary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    Select time (HHMM)
+  </button>
+</div>
+
+<!-- Time — Filled (time selected) -->
+<div class="flex flex-col gap-space-1">
+  <label for="time-start-filled" class="text-body text-text-primary">
+    Event Start Time<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="time-start-filled"
+    aria-label="Event start time: 14 30. Tap to change."
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    1430
+  </button>
+</div>
+
+<!-- Time — Error -->
+<div class="flex flex-col gap-space-1">
+  <label for="time-start-error" class="text-body text-text-primary">
+    Event Start Time<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <button
+    type="button"
+    id="time-start-error"
+    aria-label="Select event start time"
+    aria-describedby="time-start-error-msg"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-status-error
+           text-body text-text-secondary text-left flex items-center
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    Select time (HHMM)
+  </button>
+  <p id="time-start-error-msg" class="text-body-sm text-status-error">
+    Event Start Time is required.
+  </p>
+</div>
+
+<!-- Time — Disabled -->
+<div class="flex flex-col gap-space-1">
+  <label for="time-stop-disabled" class="text-body text-text-disabled">
+    Event Stop Time
+  </label>
+  <button
+    type="button"
+    id="time-stop-disabled"
+    aria-label="Event stop time — not available"
+    disabled
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface-container border-0
+           text-body text-text-disabled text-left flex items-center
+           cursor-not-allowed">
+    Select time (HHMM)
+  </button>
+</div>

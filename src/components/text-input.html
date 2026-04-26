@@ -1,0 +1,299 @@
+<!-- ============================================================
+  SAFENET Text Input + Textarea — snippet library
+  Interaction pattern: type directly into the field.
+  Covers: <input type="text">, <input type="tel">, <input type="email">,
+  and <textarea>. Five states each: default, focused, filled, error, disabled.
+  Static forced-state mocks for visual review live in styleguide.html;
+  these snippets show the interactive version (pseudo-class modifiers active).
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  SINGLE-LINE TEXT INPUT
+  Use for: Incident Name, Fire Number, Local Unit, Position Title,
+           Task, Resources Involved, Other Factors, Other Agency, Name.
+=================================================================== -->
+
+<!-- Text Input — Default, no helper text -->
+<div class="flex flex-col gap-space-1">
+  <label for="incident-name-default" class="text-body text-text-primary">
+    Incident Name<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <input type="text" id="incident-name-default" name="incident-name"
+    placeholder="e.g. Gifford Fire"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed" />
+</div>
+
+<!-- Text Input — Default, with helper text -->
+<div class="flex flex-col gap-space-1">
+  <label for="fire-number-default" class="text-body text-text-primary">
+    Fire Number
+  </label>
+  <input type="text" id="fire-number-default" name="fire-number"
+    placeholder="P-Code or 4-digit Fire Code"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed" />
+  <p class="text-body-sm text-text-secondary">
+    Enter a P-Code (e.g. P-123456) or 4-digit Fire Code.
+  </p>
+</div>
+
+<!-- Text Input — Filled -->
+<div class="flex flex-col gap-space-1">
+  <label for="incident-name-filled" class="text-body text-text-primary">
+    Incident Name<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <input type="text" id="incident-name-filled" name="incident-name"
+    value="Gifford Fire"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2" />
+</div>
+
+<!-- Text Input — Error -->
+<div class="flex flex-col gap-space-1">
+  <label for="incident-name-error" class="text-body text-status-error">
+    Incident Name<span aria-hidden="true"> *</span>
+  </label>
+  <input type="text" id="incident-name-error" name="incident-name"
+    placeholder="e.g. Gifford Fire"
+    aria-invalid="true"
+    aria-describedby="incident-name-error-msg"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-status-error
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2" />
+  <p id="incident-name-error-msg" class="text-body-sm text-status-error">
+    Incident Name is required.
+  </p>
+</div>
+
+<!-- Text Input — Disabled -->
+<div class="flex flex-col gap-space-1">
+  <label for="local-unit-disabled" class="text-body text-text-disabled">
+    Local Unit
+  </label>
+  <input type="text" id="local-unit-disabled" name="local-unit"
+    placeholder="Enter local unit"
+    disabled
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface-container border-0
+           text-body text-text-disabled placeholder:text-text-disabled
+           cursor-not-allowed" />
+</div>
+
+
+<!-- ===================================================================
+  TELEPHONE INPUT — for Name / Phone contact field
+=================================================================== -->
+
+<!-- Tel Input — Default -->
+<div class="flex flex-col gap-space-1">
+  <label for="phone-default" class="text-body text-text-primary">
+    Phone
+  </label>
+  <input type="tel" id="phone-default" name="phone"
+    placeholder="(555) 555-5555"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed" />
+</div>
+
+
+<!-- ===================================================================
+  EMAIL INPUT — for Email contact field
+=================================================================== -->
+
+<!-- Email Input — Default -->
+<div class="flex flex-col gap-space-1">
+  <label for="email-default" class="text-body text-text-primary">
+    Email
+  </label>
+  <input type="email" id="email-default" name="email"
+    placeholder="name@agency.gov"
+    class="h-touch-min px-space-4 w-full font-sans rounded-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed" />
+</div>
+
+
+<!-- ===================================================================
+  TEXTAREA — 8 rows (Narrative size)
+  Use for: Narrative.
+=================================================================== -->
+
+<!-- Textarea 8-row — Default -->
+<div class="flex flex-col gap-space-1">
+  <label for="narrative-default" class="text-body text-text-primary">
+    Narrative<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <textarea
+    id="narrative-default"
+    name="narrative"
+    rows="8"
+    placeholder="Start typing or tap Dictate..."
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed"
+  ></textarea>
+</div>
+
+<!-- Textarea 8-row — Filled -->
+<div class="flex flex-col gap-space-1">
+  <label for="narrative-filled" class="text-body text-text-primary">
+    Narrative<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <textarea
+    id="narrative-filled"
+    name="narrative"
+    rows="8"
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"
+  >At approximately 1400 hours, a spot fire was observed approximately 200 yards ahead of the crew's position on the northwest flank. Crew supervisor called for immediate withdrawal per LCES protocol. All personnel accounted for at the safety zone by 1412 hours.</textarea>
+</div>
+
+<!-- Textarea 8-row — Error -->
+<div class="flex flex-col gap-space-1">
+  <label for="narrative-error" class="text-body text-status-error">
+    Narrative<span aria-hidden="true"> *</span>
+  </label>
+  <textarea
+    id="narrative-error"
+    name="narrative"
+    rows="8"
+    placeholder="Start typing or tap Dictate..."
+    aria-invalid="true"
+    aria-describedby="narrative-error-msg"
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-status-error
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"
+  ></textarea>
+  <p id="narrative-error-msg" class="text-body-sm text-status-error">
+    Narrative is required. Please describe the incident.
+  </p>
+</div>
+
+<!-- Textarea 8-row — Disabled -->
+<div class="flex flex-col gap-space-1">
+  <label for="narrative-disabled" class="text-body text-text-disabled">
+    Narrative
+  </label>
+  <textarea
+    id="narrative-disabled"
+    name="narrative"
+    rows="8"
+    placeholder="Start typing or tap Dictate..."
+    disabled
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface-container border-0
+           text-body text-text-disabled placeholder:text-text-disabled
+           cursor-not-allowed"
+  ></textarea>
+</div>
+
+
+<!-- ===================================================================
+  TEXTAREA — 6 rows (shorter / Immediate Action size)
+  Use for: Immediate Action Taken.
+  States are identical to the 8-row textarea above — only row count differs.
+=================================================================== -->
+
+<!-- Textarea 6-row — Default -->
+<div class="flex flex-col gap-space-1">
+  <label for="action-default" class="text-body text-text-primary">
+    Immediate Action Taken<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <textarea
+    id="action-default"
+    name="immediate-action"
+    rows="6"
+    placeholder="Start typing or tap Dictate..."
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-border-strong
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+           disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+           disabled:placeholder:text-text-disabled disabled:cursor-not-allowed"
+  ></textarea>
+  <p class="text-body-sm text-text-secondary">
+    Describe the immediate actions taken in response to this incident.
+  </p>
+</div>
+
+<!-- Textarea 6-row — Filled -->
+<div class="flex flex-col gap-space-1">
+  <label for="action-filled" class="text-body text-text-primary">
+    Immediate Action Taken<span aria-hidden="true" class="text-status-error"> *</span>
+  </label>
+  <textarea
+    id="action-filled"
+    name="immediate-action"
+    rows="6"
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"
+  >All crew members withdrawn to safety zone. Supervisor notified IC via radio at 1415. Medical evaluated two personnel for heat stress, both cleared. Equipment staging area relocated per emergency action plan.</textarea>
+</div>
+
+<!-- Textarea 6-row — Error -->
+<div class="flex flex-col gap-space-1">
+  <label for="action-error" class="text-body text-status-error">
+    Immediate Action Taken<span aria-hidden="true"> *</span>
+  </label>
+  <textarea
+    id="action-error"
+    name="immediate-action"
+    rows="6"
+    placeholder="Start typing or tap Dictate..."
+    aria-invalid="true"
+    aria-describedby="action-error-msg"
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface border border-status-error
+           text-body text-text-primary placeholder:text-text-secondary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"
+  ></textarea>
+  <p id="action-error-msg" class="text-body-sm text-status-error">
+    Immediate Action Taken is required.
+  </p>
+</div>
+
+<!-- Textarea 6-row — Disabled -->
+<div class="flex flex-col gap-space-1">
+  <label for="action-disabled" class="text-body text-text-disabled">
+    Immediate Action Taken
+  </label>
+  <textarea
+    id="action-disabled"
+    name="immediate-action"
+    rows="6"
+    placeholder="Start typing or tap Dictate..."
+    disabled
+    class="px-space-4 py-space-3 w-full font-sans rounded-none resize-none
+           bg-surface-container border-0
+           text-body text-text-disabled placeholder:text-text-disabled
+           cursor-not-allowed"
+  ></textarea>
+</div>

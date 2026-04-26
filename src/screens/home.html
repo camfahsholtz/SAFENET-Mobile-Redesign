@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html, body { overflow-x: hidden; max-width: 100%; }
+      * { box-sizing: border-box; }
+      #report-list, #report-list * { max-width: 100%; }
+      #fixed-header { overflow: hidden; }
+    </style>
+    <title>SAFENET — Past Incident Reports</title>
+    <link rel="stylesheet" href="../../dist/styles.css" />
+    <script src="../data/reports.js"></script>
+  </head>
+  <body class="text-text-primary font-sans" style="max-width:100vw;overflow-x:hidden;background:#f4f0e6;">
+
+    <!-- ── NAV OVERLAY ───────────────────────────────────────────── -->
+    <div id="nav-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:#faf9f6;flex-direction:column;" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#f4f0e6;border-bottom:1px solid rgba(31,61,43,0.12);">
+        <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+          <img src="../assets/safenet-logo.png" alt="SAFENET" style="height:29px;width:auto;display:block;" />
+        </a>
+        <button id="nav-close-btn" type="button" aria-label="Close navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <line x1="2" y1="2" x2="20" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+            <line x1="20" y1="2" x2="2" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          </svg>
+        </button>
+      </div>
+      <nav style="flex:1;display:flex;flex-direction:column;padding:40px 24px;">
+        <a href="index.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Home</a>
+        <a href="report-form.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Report an Incident</a>
+        <a href="home.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:rgba(31,61,43,0.4);text-decoration:none;letter-spacing:-0.3px;">Past Incident Reports</a>
+        <a href="#" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Protocols</a>
+        <a href="#" style="display:block;padding:20px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">FAQ</a>
+      </nav>
+    </div>
+
+    <!-- ── FILTER SHEET (hidden overlay) ───────────────────────── -->
+    <div id="filter-sheet"
+         class="fixed inset-0 z-50 flex flex-col hidden"
+         style="background:#faf9f6;"
+         role="dialog" aria-modal="true" aria-label="Report filters">
+
+      <header class="flex-none h-[56px] relative flex items-center border-b border-border" style="background:#faf9f6;">
+        <button id="close-sheet" type="button" aria-label="Close filters"
+          class="absolute left-0 w-[56px] h-[56px] flex items-center justify-center text-text-primary
+                 focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+            <line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/>
+          </svg>
+        </button>
+        <h2 class="w-full text-center text-[17px] font-semibold text-text-primary">Filters</h2>
+        <button id="reset-all" type="button"
+          class="absolute right-0 h-[56px] px-5 flex items-center text-[14px] font-semibold text-action-primary
+                 focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary">
+          Reset all
+        </button>
+      </header>
+
+      <div class="flex-1 overflow-y-auto px-5 py-6" style="background:#faf9f6;">
+        <div class="flex flex-col gap-7">
+
+          <!-- DATE RANGE -->
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">Date Range</p>
+            <p class="mt-1 text-[13px] text-text-secondary">When did the event occur?</p>
+            <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Date range" id="fs-date-range">
+              <button type="button" data-filter-chip data-value="Last 7 days"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Last 7 days</button>
+              <button type="button" data-filter-chip data-value="Last 30 days"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Last 30 days</button>
+              <button type="button" data-filter-chip data-value="Last 90 days"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Last 90 days</button>
+              <button type="button" data-filter-chip data-value="Last Year"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Last Year</button>
+              <button type="button" data-filter-chip data-value="Custom Range" id="fs-custom-range-chip"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Custom Range</button>
+            </div>
+            <div id="fs-custom-range-inputs" class="hidden mt-3 flex flex-col gap-3">
+              <div class="flex flex-col gap-1">
+                <label for="fs-date-from" class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">From</label>
+                <input id="fs-date-from" type="date"
+                  class="h-[44px] px-3 w-full font-sans border border-border-strong text-[14px] text-text-primary focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary"
+                  style="background:#faf9f6;" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="fs-date-to" class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">To</label>
+                <input id="fs-date-to" type="date"
+                  class="h-[44px] px-3 w-full font-sans border border-border-strong text-[14px] text-text-primary focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary"
+                  style="background:#faf9f6;" />
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTRIBUTING FACTORS -->
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">Contributing Factors</p>
+            <p class="mt-1 text-[13px] text-text-secondary">What kinds of failures? Select all that apply</p>
+            <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Contributing Factors" id="fs-factors">
+              <button type="button" data-filter-chip data-value="Fire Behavior"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Fire Behavior</button>
+              <button type="button" data-filter-chip data-value="Communications"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Communications</button>
+              <button type="button" data-filter-chip data-value="Equipment"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Equipment</button>
+              <button type="button" data-filter-chip data-value="Environmental"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Environmental</button>
+              <button type="button" data-filter-chip data-value="Human Factors"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Human Factors</button>
+              <button type="button" data-filter-chip data-value="Other"
+                class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Other</button>
+            </div>
+          </div>
+
+          <!-- STATE -->
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">State</p>
+            <p class="mt-1 text-[13px] text-text-secondary">Limit results to specific states</p>
+            <button type="button" id="fs-geolocate" class="mt-3 h-[44px] px-4 flex items-center gap-2 border border-border-strong text-[14px] text-text-primary font-sans" style="background:#faf9f6;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+                <circle cx="7" cy="7" r="3"/>
+                <line x1="7" y1="0" x2="7" y2="3"/>
+                <line x1="7" y1="11" x2="7" y2="14"/>
+                <line x1="0" y1="7" x2="3" y2="7"/>
+                <line x1="11" y1="7" x2="14" y2="7"/>
+              </svg>
+              <span id="fs-geo-label">Use My Location</span>
+            </button>
+            <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="State" id="fs-state">
+              <button type="button" data-filter-chip data-value="AK" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">AK</button>
+              <button type="button" data-filter-chip data-value="AZ" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">AZ</button>
+              <button type="button" data-filter-chip data-value="CA" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">CA</button>
+              <button type="button" data-filter-chip data-value="CO" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">CO</button>
+              <button type="button" data-filter-chip data-value="ID" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">ID</button>
+              <button type="button" data-filter-chip data-value="MT" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">MT</button>
+              <button type="button" data-filter-chip data-value="NM" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">NM</button>
+              <button type="button" data-filter-chip data-value="NV" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">NV</button>
+              <button type="button" data-filter-chip data-value="OR" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">OR</button>
+              <button type="button" data-filter-chip data-value="TN" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">TN</button>
+              <button type="button" data-filter-chip data-value="UT" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">UT</button>
+              <button type="button" data-filter-chip data-value="WA" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">WA</button>
+              <button type="button" data-filter-chip data-value="WY" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">WY</button>
+            </div>
+          </div>
+
+          <!-- JURISDICTION -->
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">Jurisdiction</p>
+            <p class="mt-1 text-[13px] text-text-secondary">Which agency owns the land?</p>
+            <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Jurisdiction" id="fs-jurisdiction">
+              <button type="button" data-filter-chip data-value="BIA"   class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">BIA</button>
+              <button type="button" data-filter-chip data-value="BLM"   class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">BLM</button>
+              <button type="button" data-filter-chip data-value="FWS"   class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">FWS</button>
+              <button type="button" data-filter-chip data-value="NPS"   class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">NPS</button>
+              <button type="button" data-filter-chip data-value="USFS"  class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">USFS</button>
+              <button type="button" data-filter-chip data-value="State" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">State</button>
+              <button type="button" data-filter-chip data-value="Other" class="filter-chip h-[44px] px-3 border border-border-strong text-[14px] text-text-primary font-sans whitespace-nowrap" style="background:#faf9f6;">Other</button>
+            </div>
+          </div>
+
+          <!-- SEARCH -->
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">Search</p>
+            <p class="mt-1 text-[13px] text-text-secondary">Search across narrative, incident name, and location</p>
+            <div class="mt-3">
+              <input id="fs-search" type="text" placeholder="Enter keyword or phrase"
+                class="h-[44px] px-4 w-full font-sans border border-border-strong
+                       text-[14px] text-text-primary placeholder:text-text-secondary
+                       focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"
+                style="background:#faf9f6;" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="flex-none border-t border-border p-5" style="background:#faf9f6;">
+        <button id="apply-filters" type="button"
+          class="h-[56px] w-full font-sans flex items-center justify-center
+                 bg-[#082717] text-white text-[15px] font-semibold
+                 focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary">
+          Apply Filters
+        </button>
+      </footer>
+
+    </div><!-- /filter-sheet -->
+
+
+    <!-- ── APP HEADER + FILTER BAR (fixed) ─────────────────────── -->
+    <div id="fixed-header" style="position:fixed;top:0;left:0;right:0;z-index:40;">
+
+    <header style="background:#f4f0e6;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="../assets/safenet-logo.png" alt="SAFENET — National Interagency Fire Center" style="height:29px;width:auto;display:block;" />
+      </a>
+      <button id="nav-open-btn" type="button" aria-label="Open navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;">
+        <svg width="28" height="19" viewBox="0 0 28 19" fill="none" aria-hidden="true">
+          <line x1="0" y1="1.5" x2="28" y2="1.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="9.5" x2="28" y2="9.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="17.5" x2="28" y2="17.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ── TITLE + FILTER BAR ──────────────────────────────────── -->
+    <div role="region" aria-label="Report filters" class="border-b border-border-faint bg-surface px-4" style="padding-top:8px;padding-bottom:8px;">
+      <div class="flex items-center justify-between gap-3" style="margin-bottom:6px;">
+        <h1 style="font-size:18px;font-weight:800;letter-spacing:-0.4px;color:#1a2e1f;margin:0;">Past Incident Reports</h1>
+        <button id="open-filter-btn" type="button" aria-label="Open filters"
+          class="h-[43px] w-[43px] flex-shrink-0 bg-[#082717] flex items-center justify-center text-white
+                 focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+            <line x1="2" y1="5" x2="16" y2="5"/>
+            <circle cx="6" cy="5" r="2" fill="currentColor" stroke="none"/>
+            <line x1="2" y1="13" x2="16" y2="13"/>
+            <circle cx="12" cy="13" r="2" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+      </div>
+      <div id="active-chips-area" class="flex flex-wrap gap-2 min-h-0 items-center"></div>
+    </div>
+
+      <!-- Results count -->
+      <div style="padding:5px 16px 6px;background:#faf9f6;">
+        <p id="report-count" style="font-size:12px;color:#6b7a6d;margin:0;">Loading reports…</p>
+      </div>
+
+    </div><!-- end fixed header -->
+
+    <!-- ── REPORT CARD LIST ─────────────────────────────────────── -->
+    <div id="report-list" class="flex flex-col gap-[2px]"></div>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer style="border-top:1px solid rgba(31,61,43,0.15);padding:24px 24px 32px;background:#ffffff;margin-top:24px;">
+    <p style="font-size:13px;font-weight:600;color:#1a2e1f;margin:0 0 4px;">SAFENET</p>
+    <p style="font-size:12px;color:#6b7a6d;margin:0 0 12px;">National Interagency Fire Center</p>
+    <p style="font-size:12px;color:#6b7a6d;margin:0 0 4px;">Questions? <a href="mailto:SAFENET_Administrator@blm.gov" style="color:#1f3d2b;font-weight:600;text-decoration:none;">SAFENET_Administrator@blm.gov</a></p>
+    <p style="font-size:11px;color:#8a9490;margin:0;">A National Wildfire Coordinating Group program &middot; &copy; NIFC</p>
+  </footer>
+
+  <script>
+  (function () {
+
+    // ── Filter state ──────────────────────────────────────────────
+    let state = { dateRange: null, dateFrom: '', dateTo: '', factors: [], states: [], jurisdiction: [], search: '' };
+
+    // ── Build report data array ───────────────────────────────────
+    // CSV reports from SAFENET_REPORTS global (reports.js)
+    const csvReports = (typeof SAFENET_REPORTS !== 'undefined') ? SAFENET_REPORTS : [];
+
+    // User-submitted reports from localStorage
+    const localReports = JSON.parse(localStorage.getItem('safenet_reports') || '[]');
+
+    // Combine: local reports newest-first, then CSV reports
+    const allReports = [
+      ...localReports.map(r => {
+        const m = (r.submittedAt || '').match(/(\d{2})\/(\d{2})\/(\d{4})/);
+        return {
+          id:          r.id,
+          name:        r.name,
+          isoDate:     m ? `${m[3]}-${m[1]}-${m[2]}` : '',
+          displayDate: r.submittedAt,
+          meta:        r.meta || '',
+          state:       r.state || '',
+          agency:      r.agency || '',
+          factors:     r.factors || [],
+          snippet:     r.snippet || '',
+        };
+      }),
+      ...csvReports
+    ];
+
+    // ── Render all cards ─────────────────────────────────────────
+    const list = document.getElementById('report-list');
+
+    function makeCard(r) {
+      const shown = r.factors.slice(0, 2);
+      const extra = r.factors.length > 2 ? r.factors.length - 2 : 0;
+      const tagsHtml = (shown.length
+        ? shown.map(f => `<span class="bg-[#492629] px-3 py-[6px] text-[12px] tracking-[-0.3px] text-[#faf9f6]">${esc(f)}</span>`).join('')
+        : '<span class="bg-surface-subtle px-3 py-[6px] text-[12px] tracking-[-0.3px] text-text-secondary">—</span>'
+      ) + (extra ? `<span class="bg-[#492629] px-3 py-[6px] text-[12px] tracking-[-0.3px] text-[#faf9f6]">+${extra} More</span>` : '');
+
+      const a = document.createElement('a');
+      a.href = `detail.html?id=${encodeURIComponent(r.id)}`;
+      a.setAttribute('data-card', '');
+      a.setAttribute('data-factors', r.factors.join('|'));
+      a.setAttribute('data-agency',  r.agency  || '');
+      a.setAttribute('data-state',   r.state   || '');
+      a.setAttribute('data-date',    r.isoDate || '');
+      a.setAttribute('data-name',    r.name    || '');
+      a.setAttribute('data-meta',    r.meta    || '');
+      a.setAttribute('data-snippet', r.snippet || '');
+      a.className = 'block no-underline focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2';
+      a.innerHTML = `
+        <article class="bg-surface border-t border-b border-[rgba(194,200,193,0.3)] px-6 py-[27px] flex flex-col gap-4" style="overflow:hidden;max-width:100%;">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-1">
+              <p class="text-[14px] tracking-[-0.35px] text-text-secondary">${esc(r.displayDate || '')}</p>
+              <h3 class="text-[20px] tracking-[-0.5px] text-text-primary">${esc(r.name)}</h3>
+            </div>
+            <span class="text-[12px] tracking-[-0.3px] text-[#022111] whitespace-nowrap flex-shrink-0">View Report →</span>
+          </div>
+          <p class="text-[14px] text-text-secondary">${esc(r.meta)}</p>
+          <p class="text-body text-text-secondary line-clamp-2">${esc(r.snippet)}</p>
+          <div class="flex flex-wrap gap-2 pt-2">${tagsHtml}</div>
+        </article>`;
+      return a;
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // Render all into list
+    const fragment = document.createDocumentFragment();
+    allReports.forEach(r => fragment.appendChild(makeCard(r)));
+    list.appendChild(fragment);
+
+    updateCount();
+
+    // ── Filter logic ─────────────────────────────────────────────
+    function matchCard(card) {
+      const { dateRange, factors, states, jurisdiction, search } = state;
+
+      if (factors.length > 0) {
+        const cf = (card.dataset.factors || '').split('|').map(f => f.trim().toLowerCase());
+        if (!factors.some(f => cf.some(c => c.includes(f.toLowerCase())))) return false;
+      }
+
+      if (states.length > 0) {
+        const s = (card.dataset.state || '').toUpperCase();
+        if (!states.includes(s)) return false;
+      }
+
+      if (jurisdiction.length > 0) {
+        const ag = (card.dataset.agency || '').toLowerCase();
+        if (!jurisdiction.some(j => ag.includes(j.toLowerCase()))) return false;
+      }
+
+      if (search) {
+        const q = search.toLowerCase();
+        const hay = [card.dataset.name, card.dataset.meta, card.dataset.snippet].join(' ').toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+
+      if (dateRange) {
+        const cd = card.dataset.date;
+        if (cd) {
+          if (dateRange === 'Custom Range') {
+            const from = state.dateFrom, to = state.dateTo;
+            if (from && cd < from) return false;
+            if (to   && cd > to)   return false;
+          } else {
+            const today = new Date();
+            const cutoff = new Date();
+            if (dateRange === 'Last 7 days')  cutoff.setDate(today.getDate() - 7);
+            if (dateRange === 'Last 30 days') cutoff.setDate(today.getDate() - 30);
+            if (dateRange === 'Last 90 days') cutoff.setDate(today.getDate() - 90);
+            if (dateRange === 'Last Year')    cutoff.setFullYear(today.getFullYear() - 1);
+            if (cd < cutoff.toISOString().split('T')[0]) return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    function applyFilters() {
+      let visible = 0;
+      document.querySelectorAll('[data-card]').forEach(card => {
+        const show = matchCard(card);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      updateCount(visible);
+    }
+
+    function updateCount(n) {
+      const total = (n !== undefined) ? n : allReports.length;
+      document.getElementById('report-count').textContent =
+        total === 1 ? 'Showing 1 Report' : `Showing ${total} Reports`;
+    }
+
+    // ── Filter sheet open / close ─────────────────────────────────
+    const sheet = document.getElementById('filter-sheet');
+
+    function openSheet()  { sheet.classList.remove('hidden'); document.body.style.overflow = 'hidden'; syncSheetToState(); }
+    function closeSheet() { sheet.classList.add('hidden'); document.body.style.overflow = ''; }
+
+    document.getElementById('open-filter-btn').addEventListener('click', openSheet);
+    document.getElementById('close-sheet').addEventListener('click', closeSheet);
+
+    // ── Sheet chip toggle ─────────────────────────────────────────
+    function chipOn(btn)  { btn.setAttribute('aria-pressed','true');  btn.style.background='#082717'; btn.style.color='#fff'; btn.style.borderColor='#082717'; }
+    function chipOff(btn) { btn.setAttribute('aria-pressed','false'); btn.style.background='#faf9f6'; btn.style.color=''; btn.style.borderColor=''; }
+
+    document.querySelectorAll('#filter-sheet [data-filter-chip]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isSingle = btn.closest('[role="group"]').id === 'fs-date-range';
+        if (isSingle) btn.closest('[role="group"]').querySelectorAll('[data-filter-chip]').forEach(b => chipOff(b));
+        btn.getAttribute('aria-pressed') === 'true' && !isSingle ? chipOff(btn) : chipOn(btn);
+        if (isSingle) {
+          const showCustom = btn.dataset.value === 'Custom Range' && btn.getAttribute('aria-pressed') === 'true';
+          document.getElementById('fs-custom-range-inputs').classList.toggle('hidden', !showCustom);
+        }
+      });
+    });
+
+    document.getElementById('reset-all').addEventListener('click', () => {
+      document.querySelectorAll('#filter-sheet [data-filter-chip]').forEach(b => chipOff(b));
+      document.getElementById('fs-search').value = '';
+      document.getElementById('fs-custom-range-inputs').classList.add('hidden');
+    });
+
+    function syncSheetToState() {
+      document.querySelectorAll('#filter-sheet [data-filter-chip]').forEach(btn => {
+        const gid = btn.closest('[role="group"]').id;
+        const v = btn.dataset.value;
+        const active =
+          (gid === 'fs-date-range'   && state.dateRange === v) ||
+          (gid === 'fs-factors'      && state.factors.includes(v)) ||
+          (gid === 'fs-state'        && state.states.includes(v)) ||
+          (gid === 'fs-jurisdiction' && state.jurisdiction.includes(v));
+        active ? chipOn(btn) : chipOff(btn);
+      });
+      document.getElementById('fs-search').value = state.search;
+      const isCustom = state.dateRange === 'Custom Range';
+      document.getElementById('fs-custom-range-inputs').classList.toggle('hidden', !isCustom);
+      if (isCustom) {
+        document.getElementById('fs-date-from').value = state.dateFrom || '';
+        document.getElementById('fs-date-to').value   = state.dateTo   || '';
+      }
+    }
+
+    // ── Apply filters ─────────────────────────────────────────────
+    document.getElementById('apply-filters').addEventListener('click', () => {
+      const sel = id => [...document.querySelectorAll(`#${id} [aria-pressed="true"]`)].map(b => b.dataset.value);
+      const dr = sel('fs-date-range')[0] || null;
+      state = {
+        dateRange:    dr,
+        dateFrom:     dr === 'Custom Range' ? document.getElementById('fs-date-from').value : '',
+        dateTo:       dr === 'Custom Range' ? document.getElementById('fs-date-to').value   : '',
+        factors:      sel('fs-factors'),
+        states:       sel('fs-state'),
+        jurisdiction: sel('fs-jurisdiction'),
+        search:       document.getElementById('fs-search').value.trim()
+      };
+      closeSheet();
+      renderChips();
+      applyFilters();
+    });
+
+    // ── Active chips in filter bar ────────────────────────────────
+    const chipsArea = document.getElementById('active-chips-area');
+
+    function renderChips() {
+      chipsArea.innerHTML = '';
+      const add = (label, key, val) => {
+        const div = document.createElement('div');
+        div.className = 'h-[43px] flex items-center gap-[10px] bg-surface-subtle px-[14px]';
+        div.innerHTML = `
+          <span class="text-[12px] tracking-[-0.3px] text-text-primary">${esc(label)}</span>
+          <button type="button" aria-label="Remove ${esc(label)} filter" data-rk="${key}" data-rv="${esc(val)}"
+            class="flex items-center justify-center text-text-secondary leading-none focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+              <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+            </svg>
+          </button>`;
+        chipsArea.appendChild(div);
+      };
+
+      if (state.dateRange) {
+        const label = state.dateRange === 'Custom Range' && (state.dateFrom || state.dateTo)
+          ? `${state.dateFrom || '…'} – ${state.dateTo || '…'}`
+          : state.dateRange;
+        add(label, 'dateRange', state.dateRange);
+      }
+      state.factors.forEach(f =>     add(f,                  'factors',      f));
+      state.states.forEach(s =>      add(s,                  'states',       s));
+      state.jurisdiction.forEach(j=> add(j,                  'jurisdiction', j));
+      if (state.search)              add(`"${state.search}"`, 'search',      state.search);
+
+      chipsArea.querySelectorAll('[data-rk]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const k = btn.dataset.rk, v = btn.dataset.rv;
+          if (k === 'dateRange' || k === 'search') state[k] = k === 'dateRange' ? null : '';
+          else state[k] = state[k].filter(x => x !== v);
+          renderChips();
+          applyFilters();
+        });
+      });
+    }
+
+    // ── Geolocation for State filter ─────────────────────────────
+    document.getElementById('fs-geolocate').addEventListener('click', function () {
+      const label = document.getElementById('fs-geo-label');
+      if (!navigator.geolocation) { label.textContent = 'Not supported'; return; }
+      label.textContent = 'Locating…';
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`;
+        fetch(url, { headers: { 'Accept-Language': 'en' } })
+          .then(r => r.json())
+          .then(data => {
+            const raw = (data.address || {})['ISO3166-2-lvl4'] || '';
+            const code = raw.replace('US-', '').toUpperCase();
+            const chip = document.querySelector(`#fs-state [data-value="${code}"]`);
+            if (chip) {
+              document.querySelectorAll('#fs-state [data-filter-chip]').forEach(b => chipOff(b));
+              chipOn(chip);
+              label.textContent = `Using ${code}`;
+            } else {
+              label.textContent = `State not found (${code || '?'})`;
+            }
+          })
+          .catch(() => { label.textContent = 'Location error'; });
+      }, function (err) {
+        if (location.protocol === 'http:') {
+          label.textContent = 'HTTPS required for location';
+        } else {
+          label.textContent = 'Location access denied';
+        }
+      });
+    });
+
+  })();
+
+  // ── Fixed header offset ──────────────────────────────────────
+  (function () {
+    function setOffset() {
+      var h = document.getElementById('fixed-header').offsetHeight;
+      document.body.style.paddingTop = h + 'px';
+    }
+    setOffset();
+    window.addEventListener('resize', setOffset);
+    requestAnimationFrame(setOffset);
+  })();
+
+  // ── Nav overlay ──────────────────────────────────────────────
+  (function () {
+    var overlay  = document.getElementById('nav-overlay');
+    var openBtn  = document.getElementById('nav-open-btn');
+    var closeBtn = document.getElementById('nav-close-btn');
+    openBtn.addEventListener('click', function () {
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    closeBtn.addEventListener('click', function () {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+  })();
+  </script>
+
+  </body>
+</html>

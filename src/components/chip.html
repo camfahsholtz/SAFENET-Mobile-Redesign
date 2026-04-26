@@ -1,0 +1,236 @@
+<!-- ============================================================
+  SAFENET Chip Component — snippet library
+  Two variants:
+    1. Input chip — enum form fields; tappable, togglable
+    2. Filter chip — active filters; compound element with dismiss ×
+
+  MULTI-SELECT APPROACH (applies to all input chips):
+  Both single-select and multi-select groups use <button type="button">
+  with aria-pressed="true|false". The chip component has no knowledge
+  of which group type it belongs to — that distinction lives in
+  JavaScript: single-select deselects siblings on press, multi-select
+  toggles independently.
+
+  ALTERNATIVE CONSIDERED: <input type="checkbox"> styled as chips.
+  REJECTED: requires a form context and name/value attributes,
+  inconsistent with button-based single-select, harder to style as
+  standalone snippets. aria-pressed on buttons covers both patterns.
+
+  SIZE: 56px tall (touch-min). Full touch-target height.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  INPUT CHIP — UNSELECTED
+  Default state with all interactive modifiers applied.
+  aria-pressed="false" communicates selection state to screen readers.
+=================================================================== -->
+<button
+  type="button"
+  aria-pressed="false"
+  class="h-touch-min px-space-3
+         bg-surface border border-border-strong
+         text-body text-text-primary
+         flex items-center justify-center whitespace-nowrap rounded-none font-sans
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface
+         disabled:border-border disabled:text-text-disabled disabled:cursor-not-allowed">
+  Label
+</button>
+
+
+<!-- ===================================================================
+  INPUT CHIP — SELECTED
+  Border is transparent (not removed) — keeps width identical to
+  unselected so chip groups don't shift layout on toggle.
+=================================================================== -->
+<button
+  type="button"
+  aria-pressed="true"
+  class="h-touch-min px-space-3
+         bg-action-primary border border-transparent
+         text-body text-on-action-primary
+         flex items-center justify-center whitespace-nowrap rounded-none font-sans
+         transition-colors
+         hover:bg-action-primary-hover
+         active:bg-action-primary-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface
+         disabled:bg-surface-container disabled:border-border disabled:text-text-disabled disabled:cursor-not-allowed">
+  Label
+</button>
+
+
+<!-- ===================================================================
+  INPUT CHIP GROUP — SINGLE-SELECT EXAMPLE (Jurisdiction)
+  Wrap chips in role="group" with aria-label naming the field.
+  JavaScript deselects all siblings when one is pressed.
+=================================================================== -->
+<div role="group" aria-label="Jurisdiction" class="flex flex-wrap gap-space-2">
+
+  <!-- Unselected -->
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Federal
+  </button>
+
+  <!-- Selected -->
+  <button type="button" aria-pressed="true"
+    class="h-touch-min px-space-3
+           bg-action-primary border border-transparent
+           text-body text-on-action-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    State
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Local
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Private
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Tribal
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Other
+  </button>
+
+</div>
+
+
+<!-- ===================================================================
+  INPUT CHIP GROUP — MULTI-SELECT EXAMPLE (Contributing Factors)
+  Each chip toggles independently (JavaScript does not deselect siblings).
+  Same HTML semantics as single-select — see MULTI-SELECT APPROACH note.
+=================================================================== -->
+<div role="group" aria-label="Contributing Factors" class="flex flex-wrap gap-space-2">
+
+  <!-- Selected -->
+  <button type="button" aria-pressed="true"
+    class="h-touch-min px-space-3
+           bg-action-primary border border-transparent
+           text-body text-on-action-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Fire Behavior
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Communications
+  </button>
+
+  <!-- Selected -->
+  <button type="button" aria-pressed="true"
+    class="h-touch-min px-space-3
+           bg-action-primary border border-transparent
+           text-body text-on-action-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Equipment
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Environmental
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Human Factors
+  </button>
+
+  <button type="button" aria-pressed="false"
+    class="h-touch-min px-space-3
+           bg-surface border border-border-strong
+           text-body text-text-primary
+           flex items-center justify-center whitespace-nowrap rounded-none font-sans
+           transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+    Other
+  </button>
+
+</div>
+
+
+<!-- ===================================================================
+  FILTER CHIP
+  Compound element: outer div + label span + dismiss button.
+  - Outer div hover: shifts chip body to surface-container.
+  - Dismiss button hover: shifts × target to surface-container-pressed,
+    creating a two-layer hover (chip body = container, × = pressed).
+  - Label span is non-interactive here; upgrade to <button> if tapping
+    the label should open a filter editor.
+  - Dismiss button is 44×44px — the minimum per the design spec. Note:
+    this is below the 56px touch-target minimum stated in DESIGN.md §9;
+    the outer chip provides supplemental touch area.
+=================================================================== -->
+<div class="inline-flex items-center h-touch-min pl-space-3 pr-space-2 gap-space-2
+            bg-surface border border-border-strong rounded-none font-sans
+            transition-colors
+            hover:bg-surface-container">
+  <span class="text-body text-text-primary whitespace-nowrap">Filter label</span>
+  <button
+    type="button"
+    aria-label="Remove filter label filter"
+    class="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-none
+           text-body-lg text-text-secondary
+           transition-colors
+           hover:bg-surface-container-pressed hover:text-text-primary
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    ×
+  </button>
+</div>

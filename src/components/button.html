@@ -1,0 +1,136 @@
+<!-- ============================================================
+  SAFENET Button Component — snippet library
+  Source of truth for button markup. Copy these into pages.
+  All variants × sizes with interactive state modifiers applied
+  (hover / active / focus-visible / disabled respond to real input).
+  Static state mocks for visual review live in styleguide.html.
+  ============================================================ -->
+
+
+<!-- ======================== PRIMARY ======================== -->
+<!-- Filled. action-primary bg. Use for the single most important action. -->
+
+<!-- Primary / SM — 56px tall, 12px h-padding, body-sm text -->
+<button type="button"
+  class="h-touch-min px-space-3 text-body-sm font-sans
+         bg-action-primary text-on-action-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-action-primary-hover
+         active:bg-action-primary-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:bg-action-secondary disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Primary / MD — 56px tall, 16px h-padding, body text -->
+<button type="button"
+  class="h-touch-min px-space-4 text-body font-sans
+         bg-action-primary text-on-action-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-action-primary-hover
+         active:bg-action-primary-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:bg-action-secondary disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Primary / LG — 64px tall, 20px h-padding, body-lg semibold — submit action size per DESIGN.md -->
+<button type="button"
+  class="h-touch-primary px-space-5 text-body-lg font-semibold font-sans
+         bg-action-primary text-on-action-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-action-primary-hover
+         active:bg-action-primary-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:bg-action-secondary disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>
+
+
+<!-- ======================== SECONDARY ======================== -->
+<!-- Outlined. surface-elevated bg, border-strong border. Secondary actions. -->
+
+<!-- Secondary / SM -->
+<button type="button"
+  class="h-touch-min px-space-3 text-body-sm font-sans
+         bg-surface-elevated text-text-primary border border-border-strong
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:border-border disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Secondary / MD -->
+<button type="button"
+  class="h-touch-min px-space-4 text-body font-sans
+         bg-surface-elevated text-text-primary border border-border-strong
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:border-border disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Secondary / LG -->
+<button type="button"
+  class="h-touch-primary px-space-5 text-body-lg font-semibold font-sans
+         bg-surface-elevated text-text-primary border border-border-strong
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:border-border disabled:cursor-not-allowed">
+  Button
+</button>
+
+
+<!-- ======================== GHOST ======================== -->
+<!-- Transparent background. Low visual weight. Tertiary or inline actions. -->
+
+<!-- Ghost / SM -->
+<button type="button"
+  class="h-touch-min px-space-3 text-body-sm font-sans
+         bg-transparent text-text-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Ghost / MD -->
+<button type="button"
+  class="h-touch-min px-space-4 text-body font-sans
+         bg-transparent text-text-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>
+
+<!-- Ghost / LG -->
+<button type="button"
+  class="h-touch-primary px-space-5 text-body-lg font-semibold font-sans
+         bg-transparent text-text-primary
+         flex items-center justify-center whitespace-nowrap rounded-none
+         transition-colors
+         hover:bg-surface-container
+         active:bg-surface-container-pressed
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+         disabled:text-text-disabled disabled:cursor-not-allowed">
+  Button
+</button>

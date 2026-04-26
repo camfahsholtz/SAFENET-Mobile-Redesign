@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove native summary triangle across all browsers */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Disclosure icon swap: show plus when closed, minus when open */
+details .icon-closed { display: flex; }
+details .icon-open   { display: none; }
+details[open] .icon-closed { display: none; }
+details[open] .icon-open   { display: flex; }

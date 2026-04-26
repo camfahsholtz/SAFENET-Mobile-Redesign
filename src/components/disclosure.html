@@ -1,0 +1,127 @@
+<!-- ============================================================
+  SAFENET Disclosure — snippet library
+  Collapsible row for "Add contact info (optional)".
+  Default state is collapsed — anonymous path is the default.
+
+  Uses <details>/<summary> for native toggle behavior.
+  CSS hides the default marker; custom +/− SVG handled via
+  details[open] selector in the page stylesheet.
+  ============================================================ -->
+
+<style>
+  .disclosure summary { list-style: none; }
+  .disclosure summary::-webkit-details-marker { display: none; }
+  .disclosure .icon-open { display: none; }
+  .disclosure[open] .icon-closed { display: none; }
+  .disclosure[open] .icon-open { display: block; }
+</style>
+
+
+<!-- ===================================================================
+  DISCLOSURE — DEFAULT (COLLAPSED)
+=================================================================== -->
+<details class="disclosure rounded-none">
+  <summary
+    class="h-touch-min flex items-center justify-between px-space-3 rounded-none
+           border border-border-strong
+           text-body text-text-primary cursor-pointer select-none
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    <span class="font-medium">Add Contact Info (Optional)</span>
+    <!-- Plus icon — visible when closed -->
+    <svg class="icon-closed" width="14" height="14" viewBox="0 0 14 14" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+      <line x1="7" y1="1" x2="7" y2="13"/>
+      <line x1="1" y1="7" x2="13" y2="7"/>
+    </svg>
+    <!-- Minus icon — visible when open -->
+    <svg class="icon-open" width="14" height="14" viewBox="0 0 14 14" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+      <line x1="1" y1="7" x2="13" y2="7"/>
+    </svg>
+  </summary>
+
+  <div class="flex flex-col gap-space-4 pt-space-4">
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-name" class="text-body text-text-primary">Name</label>
+      <input type="text" id="contact-name" name="name" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-phone" class="text-body text-text-primary">Phone</label>
+      <input type="tel" id="contact-phone" name="phone" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-email" class="text-body text-text-primary">Email</label>
+      <input type="email" id="contact-email" name="email" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+  </div>
+</details>
+
+
+<!-- ===================================================================
+  DISCLOSURE — EXPANDED (for visual reference)
+=================================================================== -->
+<details class="disclosure rounded-none" open>
+  <summary
+    class="h-touch-min flex items-center justify-between px-space-3 rounded-none
+           border border-border-strong
+           text-body text-text-primary cursor-pointer select-none
+           focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+    <span class="font-medium">Add Contact Info (Optional)</span>
+    <svg class="icon-closed" width="14" height="14" viewBox="0 0 14 14" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+      <line x1="7" y1="1" x2="7" y2="13"/>
+      <line x1="1" y1="7" x2="13" y2="7"/>
+    </svg>
+    <svg class="icon-open" width="14" height="14" viewBox="0 0 14 14" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+      <line x1="1" y1="7" x2="13" y2="7"/>
+    </svg>
+  </summary>
+
+  <div class="flex flex-col gap-space-4 pt-space-4">
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-name-exp" class="text-body text-text-primary">Name</label>
+      <input type="text" id="contact-name-exp" name="name" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-phone-exp" class="text-body text-text-primary">Phone</label>
+      <input type="tel" id="contact-phone-exp" name="phone" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+    <div class="flex flex-col gap-space-1">
+      <label for="contact-email-exp" class="text-body text-text-primary">Email</label>
+      <input type="email" id="contact-email-exp" name="email" placeholder="Optional"
+        class="h-touch-min px-space-4 w-full font-sans rounded-none
+               bg-surface border border-border-strong
+               text-body text-text-primary placeholder:text-text-secondary
+               focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2"/>
+    </div>
+
+  </div>
+</details>

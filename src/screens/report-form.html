@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAFENET — Report an Incident</title>
+  <link rel="stylesheet" href="../../dist/styles.css" />
+</head>
+<body class="bg-surface text-text-primary font-sans pb-24">
+
+  <!-- ── NAV OVERLAY ───────────────────────────────────────────── -->
+  <div id="nav-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:#faf9f6;flex-direction:column;" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#f4f0e6;border-bottom:1px solid rgba(31,61,43,0.12);">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="../assets/safenet-logo.png" alt="SAFENET" style="height:29px;width:auto;display:block;" />
+      </a>
+      <button id="nav-close-btn" type="button" aria-label="Close navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <line x1="2" y1="2" x2="20" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="20" y1="2" x2="2" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </div>
+    <nav style="flex:1;display:flex;flex-direction:column;padding:40px 24px;">
+      <a href="index.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Home</a>
+      <a href="report-form.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:rgba(31,61,43,0.4);text-decoration:none;letter-spacing:-0.3px;">Report an Incident</a>
+      <a href="home.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Past Incident Reports</a>
+      <a href="#" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Protocols</a>
+      <a href="#" style="display:block;padding:20px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">FAQ</a>
+    </nav>
+  </div>
+
+  <!-- FIXED HEADER + PROGRESS -->
+  <div id="fixed-header" style="position:fixed;top:0;left:0;right:0;z-index:40;">
+
+    <!-- HEADER -->
+    <header style="background:#f4f0e6;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="../assets/safenet-logo.png" alt="SAFENET — National Interagency Fire Center" style="height:29px;width:auto;display:block;" />
+      </a>
+      <button id="nav-open-btn" type="button" aria-label="Open navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;">
+        <svg width="28" height="19" viewBox="0 0 28 19" fill="none" aria-hidden="true">
+          <line x1="0" y1="1.5" x2="28" y2="1.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="9.5" x2="28" y2="9.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="17.5" x2="28" y2="17.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- PAGE TITLE -->
+    <div style="background:#faf9f6; padding:12px 16px 0;">
+      <h1 style="font-size:18px; font-weight:800; letter-spacing:-0.4px; color:#1a2e1f; margin:0;">Report an Incident</h1>
+    </div>
+
+    <!-- PROGRESS INDICATOR -->
+    <div style="background:#faf9f6; border-bottom:1px solid #efefeb; padding:8px 16px 18px; display:flex; flex-direction:column; gap:10px;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <span id="progress-fraction" class="font-bold uppercase text-[#424843]" style="font-size:12px; letter-spacing:1.2px;">Section 1 of 7</span>
+        <span id="progress-title" class="font-bold uppercase text-[#1f3d2b] text-right" style="font-size:12px; letter-spacing:1.2px;">Posting Criteria</span>
+      </div>
+      <div style="height:4px; background:#e3e3df; overflow:hidden; flex-shrink:0;">
+        <div id="progress-bar" style="height:100%; background:#1f3d2b; width:14.29%; transition:width 0.3s ease;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FORM -->
+  <main>
+    <form id="report-form" novalidate class="px-space-4 py-space-8 flex flex-col gap-space-12">
+
+      <!-- SECTION 1: POSTING CRITERIA -->
+      <section id="section-1" class="flex flex-col gap-space-4">
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">SAFENET Posting Criteria</h2>
+        </div>
+        <div class="flex flex-col gap-space-3">
+          <p class="text-[14px] leading-[22px] text-text-primary">The SAFENET must be directly related to a wildland fire or all-hazard safety or health related event(s).</p>
+          <p class="text-[14px] leading-[22px] text-text-primary">Individual(s) submitting SAFENETs should do so based on first hand observation or participation in the event(s). SAFENETs that are based on hearsay or other secondhand information will not be posted.</p>
+          <p class="text-[14px] leading-[22px] text-text-primary">SAFENETs that do not include the name of the incident and/or location of the event will not be posted.</p>
+          <p class="text-[14px] leading-[22px] text-text-primary">SAFENETs that contain unprofessional content (e.g., personal attacks/slander, character defamation) will not be posted, or the offensive comments will be removed prior to posting.</p>
+          <p class="text-[14px] leading-[22px] text-text-primary">For information regarding the SAFENET program please contact:<br><a href="mailto:SAFENET_Administrator@blm.gov" class="text-[#1f3d2b] underline">SAFENET_Administrator@blm.gov</a></p>
+        </div>
+      </section>
+
+      <!-- SECTION 2: EVENT INFORMATION -->
+      <section id="section-2" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Event Information</h2>
+        </div>
+
+        <!-- Start Date / Time -->
+        <div class="grid grid-cols-2 gap-space-4">
+          <div class="flex flex-col gap-space-1">
+            <label for="event-start-date" class="text-label text-text-secondary uppercase">Event Start Date*</label>
+            <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+              <input id="event-start-date" type="text" placeholder="MM/DD/YYYY"
+                class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+            </div>
+          </div>
+          <div class="flex flex-col gap-space-1">
+            <label for="event-start-time" class="text-label text-text-secondary uppercase">Event Start Time*</label>
+            <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+              <input id="event-start-time" type="text" placeholder="HH:MM"
+                class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Stop Date / Time -->
+        <div class="grid grid-cols-2 gap-space-4">
+          <div class="flex flex-col gap-space-1">
+            <label for="event-stop-date" class="text-label text-text-secondary uppercase">Event Stop Date</label>
+            <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+              <input id="event-stop-date" type="text" placeholder="Optional"
+                class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+            </div>
+          </div>
+          <div class="flex flex-col gap-space-1">
+            <label for="event-stop-time" class="text-label text-text-secondary uppercase">Event Stop Time</label>
+            <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+              <input id="event-stop-time" type="text" placeholder="Optional"
+                class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Incident Name -->
+        <div class="flex flex-col gap-space-1">
+          <label for="incident-name" class="text-label text-text-secondary uppercase">Incident Name*</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="incident-name" type="text" placeholder="e.g. Gifford Fire"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Fire Number -->
+        <div class="flex flex-col gap-space-1">
+          <label for="fire-number" class="text-label text-text-secondary uppercase">Fire Number</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="fire-number" type="text" placeholder="P-Code or 4-digit Fire Code"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- State -->
+        <div class="flex flex-col gap-space-1">
+          <label for="state-input" class="text-label text-text-secondary uppercase">State*</label>
+          <div id="location-prompt" class="bg-surface-tinted flex flex-col gap-space-3 p-space-4 mb-space-2">
+            <p id="location-prompt-text" class="text-[14px] text-text-primary leading-5">Allow location to auto-fill State</p>
+            <div class="flex gap-space-2">
+              <button type="button" id="btn-location-allow"
+                class="h-space-12 px-space-4 bg-action-primary text-on-action-primary font-bold text-label uppercase tracking-[0.05em] flex items-center justify-center">
+                Allow
+              </button>
+              <button type="button" id="btn-location-dismiss"
+                class="h-space-12 px-space-4 bg-surface-container text-text-secondary font-bold text-label uppercase tracking-[0.05em] flex items-center justify-center">
+                Not Now
+              </button>
+            </div>
+          </div>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="state-input" type="text" placeholder="e.g. CA"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Jurisdiction -->
+        <div class="flex flex-col gap-space-2">
+          <p id="jurisdiction-label" class="text-label text-text-secondary uppercase">Jurisdiction*</p>
+          <div role="group" aria-labelledby="jurisdiction-label" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">BIA</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">BLM</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">FWS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">NPS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">USFS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">State</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Other</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Unknown</button>
+          </div>
+        </div>
+
+        <!-- Local Unit -->
+        <div class="flex flex-col gap-space-1">
+          <label for="local-unit" class="text-label text-text-secondary uppercase">Local Unit</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="local-unit" type="text"
+              class="w-full bg-transparent text-input text-text-primary border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Incident Type -->
+        <div class="flex flex-col gap-space-2">
+          <p id="incident-type-label" class="text-label text-text-secondary uppercase">Incident Type*</p>
+          <div role="group" aria-labelledby="incident-type-label" data-single="true" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Wildland</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Prescribed/Fuels Treatment</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">All Hazard</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Training</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Work Capacity Test</button>
+          </div>
+        </div>
+
+        <!-- Incident Activity -->
+        <div class="flex flex-col gap-space-2">
+          <p id="incident-activity-label" class="text-label text-text-secondary uppercase">Incident Activity*</p>
+          <div role="group" aria-labelledby="incident-activity-label" data-single="true" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Line</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Support</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Transport To/From</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Readiness/Preparedness</button>
+          </div>
+        </div>
+
+        <!-- Stage of Incident -->
+        <div class="flex flex-col gap-space-2">
+          <p id="incident-stage-label" class="text-label text-text-secondary uppercase">Stage of Incident*</p>
+          <div role="group" aria-labelledby="incident-stage-label" data-single="true" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Initial Attack</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Extended Attack</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Transfer of Command</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Mop Up</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Demobe</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Non-Incident</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Other</button>
+          </div>
+        </div>
+
+        <!-- Position Title -->
+        <div class="flex flex-col gap-space-1">
+          <label for="position-title" class="text-label text-text-secondary uppercase">Position Title</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="position-title" type="text"
+              class="w-full bg-transparent text-input text-text-primary border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Task -->
+        <div class="flex flex-col gap-space-1">
+          <label for="task" class="text-label text-text-secondary uppercase">Task</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="task" type="text"
+              class="w-full bg-transparent text-input text-text-primary border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Management Level -->
+        <div class="flex flex-col gap-space-2">
+          <p id="mgmt-level-label" class="text-label text-text-secondary uppercase">Management Level*</p>
+          <div role="group" aria-labelledby="mgmt-level-label" data-single="true" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Type 1</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Type 2</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Type 3</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Type 4</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Type 5</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">NIMAC</button>
+          </div>
+        </div>
+
+        <!-- Resources Involved -->
+        <div class="flex flex-col gap-space-1">
+          <label for="resources-involved" class="text-label text-text-secondary uppercase">Resources Involved</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="resources-involved" type="text"
+              class="w-full bg-transparent text-input text-text-primary border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 3: CONTRIBUTING FACTORS -->
+      <section id="section-3" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Contributing Factors</h2>
+        </div>
+
+        <div class="flex flex-col gap-space-2">
+          <p id="contrib-factors-label" class="text-label text-text-secondary uppercase">Contributing Factors*</p>
+          <div role="group" aria-labelledby="contrib-factors-label" id="contrib-factors-group" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Fire Behavior</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Communications</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Equipment</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Environment</button>
+            <button type="button" aria-pressed="false" data-reveals="human-factors-group" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Human Factors</button>
+            <button type="button" aria-pressed="false" data-reveals="other-factors-group" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Other</button>
+          </div>
+        </div>
+
+        <!-- Human Factors sub-field (shown when Human Factors is selected) -->
+        <div id="human-factors-group" class="hidden flex flex-col gap-space-2">
+          <p id="human-factors-label" class="text-label text-text-secondary uppercase">Human Factors*</p>
+          <div role="group" aria-labelledby="human-factors-label" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Decision Making</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Leadership</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Risk Assessment</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Fatigue</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Performance</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Situational Awareness</button>
+          </div>
+        </div>
+
+        <!-- Other Factors sub-field (shown when Other is selected) -->
+        <div id="other-factors-group" class="hidden flex flex-col gap-space-1">
+          <label for="other-factors-input" class="text-label text-text-secondary uppercase">Other Factors*</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="other-factors-input" type="text" placeholder="Describe other contributing factors"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 4: NARRATIVE -->
+      <section id="section-4" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Narrative</h2>
+        </div>
+
+        <div class="flex flex-col gap-space-2">
+          <div class="flex items-center justify-between gap-space-3">
+            <label for="narrative" class="text-label text-text-secondary uppercase">Narrative*</label>
+            <button type="button" id="dictate-narrative"
+              class="bg-surface-subtle h-space-10 px-space-3 inline-flex items-center gap-space-2 shrink-0
+                     font-bold text-label uppercase text-text-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="2" width="6" height="12" rx="3"/>
+                <path d="M5 10a7 7 0 0 0 14 0"/>
+                <line x1="12" y1="17" x2="12" y2="22"/>
+                <line x1="8" y1="22" x2="16" y2="22"/>
+              </svg>
+              <span class="dictate-label">Dictate</span>
+            </button>
+          </div>
+          <div class="bg-surface-container border-b-2 border-border w-full">
+            <textarea id="narrative" rows="8"
+              placeholder="Start typing or tap Dictate..."
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 px-space-3 pt-space-3 pb-space-6 border-0 outline-none font-sans resize-none"></textarea>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 5: IMMEDIATE ACTION TAKEN -->
+      <section id="section-5" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Immediate Action Taken</h2>
+        </div>
+
+        <div class="flex flex-col gap-space-2">
+          <div class="flex items-center justify-between gap-space-3">
+            <label for="immediate-action" class="text-label text-text-secondary uppercase">Immediate Action Taken*</label>
+            <button type="button" id="dictate-action"
+              class="bg-surface-subtle h-space-10 px-space-3 inline-flex items-center gap-space-2 shrink-0
+                     font-bold text-label uppercase text-text-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="2" width="6" height="12" rx="3"/>
+                <path d="M5 10a7 7 0 0 0 14 0"/>
+                <line x1="12" y1="17" x2="12" y2="22"/>
+                <line x1="8" y1="22" x2="16" y2="22"/>
+              </svg>
+              <span class="dictate-label">Dictate</span>
+            </button>
+          </div>
+          <div class="bg-surface-container border-b-2 border-border w-full">
+            <textarea id="immediate-action" rows="6"
+              placeholder="Start typing or tap Dictate..."
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 px-space-3 pt-space-3 pb-space-6 border-0 outline-none font-sans resize-none"></textarea>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 6: REPORTED BY -->
+      <section id="section-6" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Reported By</h2>
+        </div>
+
+        <div class="bg-surface-tinted border-l-4 border-action-primary pl-5 pr-space-4 py-space-4">
+          <p class="text-[14px] text-text-primary leading-5">
+            You have the right to report anonymously.<br>
+            Providing your contact information is optional but allows for follow-up.
+          </p>
+        </div>
+
+        <!-- Agency -->
+        <div class="flex flex-col gap-space-2">
+          <p id="agency-label" class="text-label text-text-secondary uppercase">Agency*</p>
+          <div role="group" aria-labelledby="agency-label" data-single="true" class="flex flex-wrap gap-space-2">
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">USFS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">BLM</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">NPS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">FWS</button>
+            <button type="button" aria-pressed="false" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">BIA</button>
+            <button type="button" aria-pressed="false" data-reveals="state-agency-group" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">State</button>
+            <button type="button" aria-pressed="false" data-reveals="other-agency-group" class="chip h-space-12 px-space-6 py-space-3 border border-border text-[14px] text-text-secondary font-sans whitespace-nowrap">Other</button>
+          </div>
+        </div>
+
+        <!-- State Agency sub-field -->
+        <div id="state-agency-group" class="hidden flex flex-col gap-space-1">
+          <label for="state-agency-input" class="text-label text-text-secondary uppercase">State Agency*</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="state-agency-input" type="text" placeholder="e.g. Cal Fire"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Other Agency sub-field -->
+        <div id="other-agency-group" class="hidden flex flex-col gap-space-1">
+          <label for="other-agency-input" class="text-label text-text-secondary uppercase">Other Agency*</label>
+          <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+            <input id="other-agency-input" type="text" placeholder="Enter agency name"
+              class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+          </div>
+        </div>
+
+        <!-- Optional contact info -->
+        <details class="group">
+          <summary class="w-full h-touch-min bg-surface border border-border flex items-center justify-between px-space-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            <span class="font-bold text-label uppercase text-text-primary tracking-[0.05em]">Add Contact Info (Optional)</span>
+            <svg class="group-open:hidden" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+              <line x1="7" y1="1" x2="7" y2="13"/><line x1="1" y1="7" x2="13" y2="7"/>
+            </svg>
+            <svg class="hidden group-open:block" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+              <line x1="1" y1="7" x2="13" y2="7"/>
+            </svg>
+          </summary>
+          <div class="flex flex-col gap-space-4 pt-space-4">
+            <div class="flex flex-col gap-space-1">
+              <label for="contact-name" class="text-label text-text-secondary uppercase">Name</label>
+              <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+                <input id="contact-name" type="text" placeholder="Optional"
+                  class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+              </div>
+            </div>
+            <div class="flex flex-col gap-space-1">
+              <label for="contact-phone" class="text-label text-text-secondary uppercase">Phone</label>
+              <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+                <input id="contact-phone" type="tel" placeholder="Optional"
+                  class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+              </div>
+            </div>
+            <div class="flex flex-col gap-space-1">
+              <label for="contact-email" class="text-label text-text-secondary uppercase">Email</label>
+              <div class="bg-surface-container border-b-2 border-border h-touch-min flex items-center px-space-3">
+                <input id="contact-email" type="email" placeholder="Optional"
+                  class="w-full bg-transparent text-input text-text-primary placeholder:text-text-secondary placeholder:opacity-50 border-0 outline-none font-sans" />
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </section>
+
+      <!-- SECTION 7: ATTACHMENTS -->
+      <section id="section-7" class="flex flex-col gap-space-6">
+
+        <div class="border-b border-border-faint pb-[9px]">
+          <h2 class="text-section text-text-secondary uppercase">Attachments</h2>
+        </div>
+
+        <!-- Single native file input — iOS shows Camera / Photo Library / Browse natively -->
+        <input id="input-attachment" type="file" accept="image/*,.pdf,.doc,.docx,.txt,.gif" multiple class="hidden" />
+
+        <p class="text-[16px] leading-[24px] text-[#424843]">Please attach any relevant photos, documents, or supporting evidence related to the incident report. Upload up to 5 files (JPG, GIF, PNG, PDF, DOC, DOCX, or TXT).</p>
+
+        <!-- Add Attachment button -->
+        <button type="button" id="btn-add-attachment"
+          class="w-full h-16 bg-[#e3e3df] border border-[rgba(194,200,193,0.5)] flex items-center justify-center gap-6 active:opacity-80">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" stroke="#1f3d2b" stroke-width="1.5"/>
+            <line x1="10" y1="5" x2="10" y2="15" stroke="#1f3d2b" stroke-width="1.5" stroke-linecap="square"/>
+            <line x1="5" y1="10" x2="15" y2="10" stroke="#1f3d2b" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+          <span class="font-bold text-[16px] tracking-[0.8px] uppercase text-[#1f3d2b]" style="margin-left:20px;">Add Attachment</span>
+        </button>
+
+        <!-- Current attachments list -->
+        <div id="attachments-section" class="hidden flex flex-col gap-4">
+          <p id="attachment-count-label" class="text-[12px] font-bold tracking-[1.2px] uppercase text-[#424843]">Current Attachments (0)</p>
+          <div id="attachment-list" class="flex flex-col"></div>
+        </div>
+
+        <!-- Legal text -->
+        <div class="bg-[#f4f4f0] border-l-4 border-[#1f3d2b] pl-5 pr-4 py-4">
+          <p class="text-[12px] leading-[19.5px] text-[#424843]">By submitting these documents, you certify that to the best of your knowledge, the information provided is true, accurate, and complete. Falsification of evidence is subject to disciplinary action under Federal Archival Standards, Section 4.2.</p>
+        </div>
+
+      </section>
+
+    </form>
+  </main>
+
+  <!-- SUBMIT BAR -->
+  <footer class="fixed bottom-0 left-0 right-0 z-50 border-t border-[rgba(194,200,193,0.2)] bg-[#faf9f6] shadow-submit" style="padding: 17px 16px 16px;">
+    <button id="submit-btn" type="button"
+       class="w-full flex items-center justify-center bg-[#1f3d2b] text-white font-bold text-[16px] uppercase font-sans"
+       style="height:64px; letter-spacing:1.6px;">
+      Submit Report
+    </button>
+  </footer>
+
+  <script>
+    // ── Nav overlay ──────────────────────────────────────────────
+    (function () {
+      var overlay  = document.getElementById('nav-overlay');
+      var openBtn  = document.getElementById('nav-open-btn');
+      var closeBtn = document.getElementById('nav-close-btn');
+      openBtn.addEventListener('click', function () { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; });
+      closeBtn.addEventListener('click', function () { overlay.style.display = 'none'; document.body.style.overflow = ''; });
+    })();
+
+    // ── Location auto-fill ───────────────────────────────────────
+    (function () {
+      const prompt   = document.getElementById('location-prompt');
+      const promptTx = document.getElementById('location-prompt-text');
+      const allowBtn = document.getElementById('btn-location-allow');
+      const dismissBtn = document.getElementById('btn-location-dismiss');
+      const stateInput = document.getElementById('state-input');
+
+      dismissBtn.addEventListener('click', () => prompt.style.display = 'none');
+
+      allowBtn.addEventListener('click', () => {
+        if (location.protocol !== 'https:') {
+          promptTx.textContent = 'Auto-fill requires a secure connection (HTTPS). Please enter your state manually.';
+          allowBtn.style.display = 'none';
+          dismissBtn.textContent = 'Dismiss';
+          return;
+        }
+        if (!navigator.geolocation) {
+          promptTx.textContent = 'Geolocation not supported by this browser.';
+          return;
+        }
+        allowBtn.textContent = 'Locating…';
+        allowBtn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(async pos => {
+          const { latitude, longitude } = pos.coords;
+          try {
+            const res  = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+              { headers: { 'Accept-Language': 'en' } }
+            );
+            const data = await res.json();
+            const iso  = data.address?.['ISO3166-2-lvl4'] || '';
+            const code = iso.includes('-') ? iso.split('-')[1] : (data.address?.state_code || '');
+            if (code) {
+              stateInput.value = code.toUpperCase();
+              prompt.style.display = 'none';
+            } else {
+              promptTx.textContent = 'Could not determine state. Please enter manually.';
+              allowBtn.textContent = 'Allow';
+              allowBtn.disabled = false;
+            }
+          } catch (e) {
+            promptTx.textContent = 'Location lookup failed. Please enter manually.';
+            allowBtn.textContent = 'Allow';
+            allowBtn.disabled = false;
+          }
+        }, err => {
+          const msg = err.code === 1
+            ? 'Location access denied. On iPhone: Settings > Privacy > Location Services > Safari.'
+            : 'Location unavailable. Please enter your state manually.';
+          promptTx.textContent = msg;
+          allowBtn.textContent = 'Allow';
+          allowBtn.disabled = false;
+        });
+      });
+    })();
+
+    // ── Fixed header offset ──────────────────────────────────────
+    (function () {
+      const header = document.getElementById('fixed-header');
+      const main   = document.querySelector('main');
+      function applyOffset() {
+        if (header && main) main.style.paddingTop = header.offsetHeight + 'px';
+      }
+      applyOffset();
+      window.addEventListener('resize', applyOffset);
+    })();
+
+    // ── Chip toggle ──────────────────────────────────────────────
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.closest('[role="group"]');
+        const isSingle = group && group.dataset.single === 'true';
+        const wasPressed = btn.getAttribute('aria-pressed') === 'true';
+        if (isSingle) {
+          group.querySelectorAll('.chip').forEach(b => {
+            b.setAttribute('aria-pressed', 'false');
+            b.style.cssText = '';
+            // Hide any sub-fields revealed by sibling chips
+            const sibReveal = b.dataset.reveals;
+            if (sibReveal) {
+              const t = document.getElementById(sibReveal);
+              if (t) {
+                t.classList.add('hidden');
+                t.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+              }
+            }
+          });
+        }
+        if (!wasPressed) {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.style.background = '#082717';
+          btn.style.color = '#ffffff';
+          btn.style.borderColor = '#082717';
+        } else if (!isSingle) {
+          btn.setAttribute('aria-pressed', 'false');
+          btn.style.cssText = '';
+        }
+
+        // Reveal conditional sub-fields
+        const revealsId = btn.dataset.reveals;
+        if (revealsId) {
+          const target = document.getElementById(revealsId);
+          if (target) {
+            const nowPressed = btn.getAttribute('aria-pressed') === 'true';
+            target.classList.toggle('hidden', !nowPressed);
+            if (!nowPressed) {
+              // Clear sub-field when parent is deselected
+              if (revealsId === 'human-factors-group') {
+                target.querySelectorAll('.chip').forEach(b => { b.setAttribute('aria-pressed', 'false'); b.style.cssText = ''; });
+              }
+              if (revealsId === 'other-factors-group') {
+                const inp = document.getElementById('other-factors-input');
+                if (inp) inp.value = '';
+              }
+            }
+          }
+        }
+      });
+    });
+
+    // ── Dictate ──────────────────────────────────────────────────
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    // Toast shown when falling back to keyboard mic
+    function showDictateToast(textarea) {
+      const existing = document.getElementById('dictate-toast');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.id = 'dictate-toast';
+      toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#1a1c1a;color:#fff;padding:10px 18px;font-size:14px;z-index:9999;white-space:nowrap;border-radius:2px;pointer-events:none;';
+      toast.textContent = 'Tap 🎤 on your keyboard to dictate';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+      textarea.focus();
+    }
+
+    function makeDictate(btnId, targetId) {
+      const btn = document.getElementById(btnId);
+      const textarea = document.getElementById(targetId);
+      if (!btn || !textarea) return;
+
+      // No Speech API (or non-HTTPS) — button focuses field + shows keyboard hint
+      if (!SpeechRecognition || location.protocol !== 'https:') {
+        btn.addEventListener('click', () => showDictateToast(textarea));
+        return;
+      }
+
+      let recognition = null;
+      let active = false;
+
+      btn.addEventListener('click', () => {
+        if (active) { recognition && recognition.stop(); return; }
+
+        recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        let baseText = textarea.value;
+        if (baseText && !baseText.endsWith(' ')) baseText += ' ';
+        let interim = '';
+
+        recognition.onstart = () => {
+          active = true;
+          btn.style.background = '#7a1c20';
+          btn.style.color = '#fff';
+          btn.querySelector('.dictate-label').textContent = 'Stop';
+        };
+
+        recognition.onresult = e => {
+          interim = '';
+          let final = '';
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            if (e.results[i].isFinal) final += e.results[i][0].transcript;
+            else interim += e.results[i][0].transcript;
+          }
+          if (final) baseText += final + ' ';
+          textarea.value = baseText + interim;
+        };
+
+        recognition.onend = () => {
+          active = false;
+          textarea.value = baseText.trimEnd();
+          btn.style.cssText = '';
+          btn.querySelector('.dictate-label').textContent = 'Dictate';
+        };
+
+        recognition.onerror = e => {
+          active = false;
+          btn.style.cssText = '';
+          btn.querySelector('.dictate-label').textContent = 'Dictate';
+          if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+            showDictateToast(textarea);
+          } else if (e.error !== 'aborted') {
+            alert('Microphone error: ' + e.error);
+          }
+        };
+
+        recognition.start();
+      });
+    }
+
+    makeDictate('dictate-narrative', 'narrative');
+    makeDictate('dictate-action', 'immediate-action');
+
+    // ── Attachments ──────────────────────────────────────────────
+    const MAX_FILES = 5;
+    const selectedFiles = [];
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function renderAttachmentList() {
+      const list = document.getElementById('attachment-list');
+      const section = document.getElementById('attachments-section');
+      const label = document.getElementById('attachment-count-label');
+      list.innerHTML = '';
+
+      if (selectedFiles.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      label.textContent = `Current Attachments (${selectedFiles.length})`;
+
+      selectedFiles.forEach((f, i) => {
+        const isImage = f.type.startsWith('image/');
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between pt-[16px] pb-[17px] border-b border-[rgba(194,200,193,0.2)]';
+
+        // Left: 48×48 icon square + filename/size
+        const left = document.createElement('div');
+        left.className = 'flex items-center';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'w-[48px] h-[48px] shrink-0 bg-[#e8e8e5] flex items-center justify-center';
+        thumb.innerHTML = isImage
+          ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#424843" stroke-width="1.5" stroke-linecap="square"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>`
+          : `<svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#424843" stroke-width="1.5" stroke-linecap="square"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+
+        const info = document.createElement('div');
+        info.className = 'pl-[16px] flex flex-col gap-[4px]';
+        info.innerHTML = `
+          <p class="text-[14px] font-semibold leading-[20px] text-[#1a1c1a] max-w-[200px] truncate">${f.name}</p>
+          <p class="text-[12px] font-normal leading-[16px] text-[#424843]">${formatBytes(f.size)}</p>`;
+
+        left.appendChild(thumb);
+        left.appendChild(info);
+
+        // Right: trash button
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'shrink-0 p-[8px]';
+        remove.innerHTML = `<svg width="13" height="15" viewBox="0 0 13 15" fill="none" stroke="#d32f2f" stroke-width="1.5" stroke-linecap="square">
+          <line x1="0" y1="3" x2="13" y2="3"/>
+          <path d="M2 3l0.8 10h7.4L11 3"/>
+          <path d="M4.5 3V1.5h4V3"/>
+        </svg>`;
+        remove.addEventListener('click', () => {
+          selectedFiles.splice(i, 1);
+          renderAttachmentList();
+        });
+
+        row.appendChild(left);
+        row.appendChild(remove);
+        list.appendChild(row);
+      });
+    }
+
+    function addFiles(fileList) {
+      const remaining = MAX_FILES - selectedFiles.length;
+      const toAdd = Array.from(fileList).slice(0, remaining);
+      toAdd.forEach(f => selectedFiles.push(f));
+      renderAttachmentList();
+      if (fileList.length > remaining) alert(`Max ${MAX_FILES} files. Some files were not added.`);
+    }
+
+    document.getElementById('btn-add-attachment').addEventListener('click', () => {
+      if (selectedFiles.length >= MAX_FILES) { alert(`Max ${MAX_FILES} files reached.`); return; }
+      document.getElementById('input-attachment').click();
+    });
+    document.getElementById('input-attachment').addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+
+    // ── Submit ───────────────────────────────────────────────────
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const name = document.getElementById('incident-name').value.trim();
+      if (!name) {
+        alert('Incident Name is required.');
+        document.getElementById('incident-name').focus();
+        return;
+      }
+
+      const now = new Date();
+      const p = n => String(n).padStart(2, '0');
+      const submittedAt = `${p(now.getMonth()+1)}/${p(now.getDate())}/${now.getFullYear()} ${p(now.getHours())}:${p(now.getMinutes())}`;
+
+      const getSelected = labelId =>
+        [...document.querySelectorAll(`[aria-labelledby="${labelId}"] [aria-pressed="true"]`)]
+          .map(b => b.textContent.trim());
+
+      const state       = (document.getElementById('state-input').value || '').trim();
+      const fireNumber  = (document.getElementById('fire-number').value || '').trim();
+      const startDate   = (document.getElementById('event-start-date').value || '').trim();
+      const startTime   = (document.getElementById('event-start-time').value || '').trim();
+      const stopDate    = (document.getElementById('event-stop-date').value || '').trim();
+      const stopTime    = (document.getElementById('event-stop-time').value || '').trim();
+      const localUnit   = (document.getElementById('local-unit').value || '').trim();
+      const task        = (document.getElementById('task').value || '').trim();
+      const resources   = (document.getElementById('resources-involved').value || '').trim();
+      const narrative   = (document.getElementById('narrative').value || '').trim();
+      const action      = (document.getElementById('immediate-action').value || '').trim();
+
+      const agency           = getSelected('agency-label');
+      const stateAgencyVal   = (document.getElementById('state-agency-input').value || '').trim();
+      const otherAgencyVal   = (document.getElementById('other-agency-input').value || '').trim();
+      const factors          = getSelected('contrib-factors-label');
+      const humanFactors    = getSelected('human-factors-label');
+      const otherFactorsVal = (document.getElementById('other-factors-input').value || '').trim();
+      const jurisdiction    = getSelected('jurisdiction-label');
+      const mgmtLevel       = getSelected('mgmt-level-label');
+      const incidentType    = getSelected('incident-type-label');
+      const incidentActivity = getSelected('incident-activity-label');
+      const incidentStage   = getSelected('incident-stage-label');
+
+      if (!agency.length) { alert('Agency is required.'); return; }
+      if (agency[0] === 'State' && !stateAgencyVal) { alert('State Agency name is required.'); return; }
+      if (agency[0] === 'Other' && !otherAgencyVal) { alert('Other Agency name is required.'); return; }
+      if (!factors.length) { alert('Contributing Factors is required.'); return; }
+      if (factors.includes('Human Factors') && !humanFactors.length) { alert('Please select at least one Human Factor.'); return; }
+      if (factors.includes('Other') && !otherFactorsVal) { alert('Other Factors description is required.'); return; }
+      if (!incidentType.length) { alert('Incident Type is required.'); return; }
+      if (!incidentActivity.length) { alert('Incident Activity is required.'); return; }
+      if (!incidentStage.length) { alert('Stage of Incident is required.'); return; }
+
+      const metaParts = [state, fireNumber, agency[0]].filter(Boolean);
+
+      // Store file metadata only (File objects don't survive page nav)
+      const attachments = selectedFiles.map(f => ({ name: f.name, size: f.size, type: f.type }));
+
+      const report = {
+        id: `report-${Date.now()}`,
+        submittedAt,
+        name,
+        fireNumber,
+        state,
+        jurisdiction,
+        localUnit,
+        agency: agency[0] === 'State' ? (stateAgencyVal || 'State') : agency[0] === 'Other' ? (otherAgencyVal || 'Other') : (agency[0] || ''),
+        startDate,
+        startTime,
+        stopDate,
+        stopTime,
+        narrative,
+        immediateAction: action,
+        factors,
+        humanFactors,
+        otherFactors: otherFactorsVal,
+        mgmtLevel: mgmtLevel[0] || '',
+        incidentType: incidentType[0] || '',
+        incidentActivity: incidentActivity[0] || '',
+        incidentStage: incidentStage[0] || '',
+        task,
+        resources,
+        meta: metaParts.join(' · '),
+        snippet: (narrative || action).slice(0, 140),
+        attachments
+      };
+
+      const existing = JSON.parse(localStorage.getItem('safenet_reports') || '[]');
+      existing.unshift(report);
+      localStorage.setItem('safenet_reports', JSON.stringify(existing));
+
+      window.location.href = 'home.html';
+    });
+
+    // ── Progress bar ─────────────────────────────────────────────
+    (function () {
+      const SECTIONS = [
+        { id: 'section-1', title: 'Posting Criteria' },
+        { id: 'section-2', title: 'Event Information' },
+        { id: 'section-3', title: 'Contributing Factors' },
+        { id: 'section-4', title: 'Narrative' },
+        { id: 'section-5', title: 'Immediate Action Taken' },
+        { id: 'section-6', title: 'Reported By' },
+        { id: 'section-7', title: 'Attachments' },
+      ];
+      const TOTAL = SECTIONS.length;
+      const fractionEl = document.getElementById('progress-fraction');
+      const titleEl    = document.getElementById('progress-title');
+      const barEl      = document.getElementById('progress-bar');
+
+      function setSection(index) {
+        const n = index + 1;
+        fractionEl.textContent = `Section ${n} of ${TOTAL}`;
+        titleEl.textContent    = SECTIONS[index].title;
+        barEl.style.width      = ((n / TOTAL) * 100).toFixed(2) + '%';
+      }
+
+      // Track which section is most visible
+      const visibleRatios = new Array(TOTAL).fill(0);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const idx = SECTIONS.findIndex(s => s.id === entry.target.id);
+          if (idx !== -1) visibleRatios[idx] = entry.intersectionRatio;
+        });
+        // Pick the section with the highest visibility ratio; tie-break by first occurrence
+        let best = 0;
+        for (let i = 1; i < TOTAL; i++) {
+          if (visibleRatios[i] > visibleRatios[best]) best = i;
+        }
+        setSection(best);
+      }, {
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        rootMargin: '-10% 0px -10% 0px'
+      });
+
+      SECTIONS.forEach(s => {
+        const el = document.getElementById(s.id);
+        if (el) observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>

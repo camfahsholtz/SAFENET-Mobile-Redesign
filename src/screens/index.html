@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>html { overflow-x: hidden; } * { box-sizing: border-box; }</style>
+    <title>SAFENET — National Interagency Fire Center</title>
+    <link rel="stylesheet" href="../../dist/styles.css" />
+  </head>
+  <body class="bg-surface text-text-primary font-sans" style="max-width:100vw;overflow-x:hidden;">
+
+    <!-- ── NAV OVERLAY ───────────────────────────────────────────── -->
+    <div id="nav-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:#faf9f6;flex-direction:column;" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#f4f0e6;border-bottom:1px solid rgba(31,61,43,0.12);">
+        <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+          <img src="../assets/safenet-logo.png" alt="SAFENET" style="height:29px;width:auto;display:block;" />
+        </a>
+        <button id="nav-close-btn" type="button" aria-label="Close navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <line x1="2" y1="2" x2="20" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+            <line x1="20" y1="2" x2="2" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          </svg>
+        </button>
+      </div>
+      <nav style="flex:1;display:flex;flex-direction:column;padding:40px 24px;">
+        <a href="index.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:rgba(31,61,43,0.4);text-decoration:none;letter-spacing:-0.3px;">Home</a>
+        <a href="report-form.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Report an Incident</a>
+        <a href="home.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Past Incident Reports</a>
+        <a href="#" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Protocols</a>
+        <a href="#" style="display:block;padding:20px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">FAQ</a>
+      </nav>
+    </div>
+
+    <!-- ── APP HEADER (sticky) ───────────────────────────────────── -->
+    <header id="fixed-header" style="position:fixed;top:0;left:0;right:0;z-index:40;background:#f4f0e6;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;max-width:100%;">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="../assets/safenet-logo.png" alt="SAFENET — National Interagency Fire Center" style="height:29px;width:auto;display:block;" />
+      </a>
+      <button id="nav-open-btn" type="button" aria-label="Open navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;">
+        <svg width="28" height="19" viewBox="0 0 28 19" fill="none" aria-hidden="true">
+          <line x1="0" y1="1.5" x2="28" y2="1.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="9.5" x2="28" y2="9.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="0" y1="17.5" x2="28" y2="17.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ── HERO ──────────────────────────────────────────────────── -->
+    <section style="background:#faf9f6;padding:40px 24px 36px;border-bottom:1px solid rgba(31,61,43,0.12);">
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6b7a6d;margin:0 0 10px;">National Interagency Fire Center</p>
+      <h1 style="font-size:30px;font-weight:800;letter-spacing:-0.8px;line-height:1.1;color:#1a2e1f;margin:0 0 14px;">Wildland Fire Safety Reporting</h1>
+      <p style="font-size:15px;line-height:1.6;color:#424843;margin:0 0 28px;">A confidential system for wildland firefighters to communicate unsafe, high-risk, and near-miss incidents to leadership.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="report-form.html" style="display:flex;align-items:center;justify-content:center;height:56px;background:#1f3d2b;color:#ffffff;font-size:15px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;">
+          Report an Incident
+        </a>
+        <a href="home.html" style="display:flex;align-items:center;justify-content:center;height:56px;background:transparent;color:#1f3d2b;font-size:15px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(31,61,43,0.35);">
+          Past Incident Reports
+        </a>
+      </div>
+    </section>
+
+    <!-- ── INFO CONTENT ──────────────────────────────────────────── -->
+    <main style="padding:0 0 48px;">
+
+      <!-- What is SAFENET? -->
+      <section style="padding:32px 24px 0;">
+        <h2 style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1f3d2b;margin:0 0 14px;border-bottom:1px solid rgba(31,61,43,0.15);padding-bottom:10px;">What is SAFENET?</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">The SAFENET system is a tool for operational wildland firefighters and support staff to communicate unsafe, unhealthy, near-miss and high-risk operations within wildland fire, all-hazard operations, training and other related work environments to leadership. SAFENET is also a reporting system to collect data to assist in identifying trends, document working conditions, and track accidents. Reporting data assists wildland fire leadership in making informed decisions to help mitigate risk.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">SAFENET is a <strong>confidential database</strong>. Users are encouraged, but not required, to include name and contact information when reporting. SAFENETs are sanitized to display safety and health-related information only, and will not identify the names of individuals, crews or other resources. SAFENET is not intended for initiating punitive actions or airing personal grievances.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">SAFENET is not a substitute for "on the spot" risk mitigations or corrections. It is a tool used to identify, document, track and communicate safety and risk management related issues.</p>
+        </div>
+      </section>
+
+      <!-- Who Should File -->
+      <section style="padding:32px 24px 0;">
+        <h2 style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1f3d2b;margin:0 0 14px;border-bottom:1px solid rgba(31,61,43,0.15);padding-bottom:10px;">Who Should File a SAFENET?</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">Individuals who observe or are involved in a high-risk situation should initiate immediate corrective action and/or risk mitigation, if possible.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">It is recognized that radio, IT, network and communications play a large role in SAFENET submittals. In order to serve the field, it is suggested that each individual first follow their respective agencies radio, network and communication ticket workflow. This ensures that the issue is now in the queue to be resolved. It is then suggested that individuals submit a SAFENET to document the issue and how it relates to wildland fire, all hazard, or training operations.</p>
+        </div>
+      </section>
+
+      <!-- What Happens Next -->
+      <section style="padding:32px 24px 0;">
+        <h2 style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1f3d2b;margin:0 0 14px;border-bottom:1px solid rgba(31,61,43,0.15);padding-bottom:10px;">What Happens Next?</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">SAFENET data reports are first reviewed and sanitized (removing identifying information) by the SAFENET administrator. Reports are then forwarded to the applicable NWCG Risk Management Committee Agency representative as well as to those they designate. This may include unit-level fire and safety managers, radio program representatives or national office fire managers.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">NWCG Risk Management Committee Agency Representatives and corresponding designees have two full business days to review the report before the report is being posted publicly to the SAFENET website. In rare cases, NWCG Risk Management Committee (NWCG RMC) representatives may request additional time to listen to concerns and/or confirm information before a SAFENET is made public. The NWCG Risk Management Committee approves these requests. If you have filed a report and are concerned about the time it is taking to become public, please contact the SAFENET manager at <a href="mailto:SAFENET_Administrator@blm.gov" style="color:#1f3d2b;font-weight:600;">SAFENET_Administrator@blm.gov</a>.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">Agency responses and actions may take place and will be reported on the SAFENET website.</p>
+          <p style="font-size:15px;line-height:1.65;color:#2e3832;margin:0;">The SAFENET system is intended to provide a forum for wildland firefighters to communicate their safety and risk management concerns. Once the system brings a potential issue to light, the agency(s) involved review the issue and can provide comments, correct inaccuracies, and/or implement corrective actions (if necessary) based on their findings. Neither the National Wildfire Coordinating Group (NWCG) nor its members make any claims as to the accuracy or validity of individual SAFENETs.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ────────────────────────────────────────────────── -->
+    <footer style="background:#ffffff;border-top:1px solid rgba(31,61,43,0.1);padding:24px;text-align:center;">
+      <p style="font-size:12px;color:#8a9490;margin:0 0 4px;">National Interagency Fire Center</p>
+      <p style="font-size:12px;color:#8a9490;margin:0;">Questions? <a href="mailto:SAFENET_Administrator@blm.gov" style="color:#1f3d2b;font-weight:600;text-decoration:none;">SAFENET_Administrator@blm.gov</a></p>
+    </footer>
+
+    <script>
+    (function () {
+      var overlay  = document.getElementById('nav-overlay');
+      var openBtn  = document.getElementById('nav-open-btn');
+      var closeBtn = document.getElementById('nav-close-btn');
+      openBtn.addEventListener('click', function () {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+      closeBtn.addEventListener('click', function () {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+      function setOffset() {
+        var h = document.getElementById('fixed-header').offsetHeight;
+        document.body.style.paddingTop = h + 'px';
+      }
+      setOffset();
+      window.addEventListener('resize', setOffset);
+      requestAnimationFrame(setOffset);
+    })();
+    </script>
+  </body>
+</html>

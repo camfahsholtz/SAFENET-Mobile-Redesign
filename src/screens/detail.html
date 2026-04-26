@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>html,body{overflow-x:hidden;max-width:100%;}*{box-sizing:border-box;}</style>
+  <title>SAFENET — Report Details</title>
+  <link rel="stylesheet" href="../../dist/styles.css" />
+</head>
+<body style="background:#f4f0e6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;">
+
+  <!-- ── NAV OVERLAY ───────────────────────────────────────────── -->
+  <div id="nav-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:#faf9f6;flex-direction:column;" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#f4f0e6;border-bottom:1px solid rgba(31,61,43,0.12);">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+        <img src="../assets/safenet-logo.png" alt="SAFENET" style="height:29px;width:auto;display:block;" />
+      </a>
+      <button id="nav-close-btn" type="button" aria-label="Close navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <line x1="2" y1="2" x2="20" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+          <line x1="20" y1="2" x2="2" y2="20" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </div>
+    <nav style="flex:1;display:flex;flex-direction:column;padding:40px 24px;">
+      <a href="index.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Home</a>
+      <a href="report-form.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Report an Incident</a>
+      <a href="home.html" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Past Incident Reports</a>
+      <a href="#" style="display:block;padding:20px 0;border-bottom:1px solid rgba(31,61,43,0.1);font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">Protocols</a>
+      <a href="#" style="display:block;padding:20px 0;font-size:24px;font-weight:700;color:#1a2e1f;text-decoration:none;letter-spacing:-0.3px;">FAQ</a>
+    </nav>
+  </div>
+
+  <!-- ── APP HEADER (sticky) ───────────────────────────────────── -->
+  <header style="position:sticky;top:0;z-index:40;background:#f4f0e6;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;">
+    <a href="index.html" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+      <img src="../assets/safenet-logo.png" alt="SAFENET — National Interagency Fire Center" style="height:29px;width:auto;display:block;" />
+    </a>
+    <button id="nav-open-btn" type="button" aria-label="Open navigation" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;">
+      <svg width="28" height="19" viewBox="0 0 28 19" fill="none" aria-hidden="true">
+        <line x1="0" y1="1.5" x2="28" y2="1.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        <line x1="0" y1="9.5" x2="28" y2="9.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+        <line x1="0" y1="17.5" x2="28" y2="17.5" stroke="#1f3d2b" stroke-width="2.5" stroke-linecap="square"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ── BACK LINK ─────────────────────────────────────────────── -->
+  <div style="padding:12px 24px 0;">
+    <a href="home.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#6b7a6d;text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+        <line x1="13" y1="8" x2="3" y2="8"/><polyline points="7,4 3,8 7,12"/>
+      </svg>
+      All Reports
+    </a>
+  </div>
+
+  <!-- ── HERO CARD (matches home page card style) ───────────────── -->
+  <article style="background:#ffffff;border-top:1px solid rgba(194,200,193,0.3);border-bottom:1px solid rgba(194,200,193,0.3);padding:27px 24px;display:flex;flex-direction:column;gap:16px;margin-top:12px;">
+    <div>
+      <p id="report-date" style="font-size:14px;letter-spacing:-0.35px;color:#6b7a6d;margin:0 0 4px;">04/14/2026</p>
+      <h1 id="report-name" style="font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#1a1c1a;margin:0;line-height:1.15;">Gifford Fire</h1>
+    </div>
+    <p id="report-meta" style="font-size:14px;color:#6b7a6d;margin:0;">CA · CA-LPF-001234 · USFS</p>
+    <div id="report-tags" style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:#492629;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">Communications</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:#492629;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">Equipment</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:#492629;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">Human Factors</span>
+        <span style="background:#96555b;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">Decision Making</span>
+        <span style="background:#96555b;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">Fatigue</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- ── SECTION: EVENT INFORMATION ───────────────────────────── -->
+  <section style="background:#ffffff;margin-top:2px;padding:24px 24px 8px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6b7a6d;margin:0 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(31,61,43,0.1);">Event Information</p>
+    <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:24px;">
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Start</p>
+        <p id="report-start" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">04/14/2026 14:30</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Stop</p>
+        <p id="report-stop" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">04/14/2026 18:30</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Local Unit</p>
+        <p id="report-local-unit" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Mount Pinos Ranger District</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Incident Type</p>
+        <p id="report-incident-type" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Wildland</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Activity</p>
+        <p id="report-incident-activity" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Line</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Stage</p>
+        <p id="report-stage" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Extended Attack</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Mgmt Level</p>
+        <p id="report-mgmt-level" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">3</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Task</p>
+        <p id="report-task" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Line Construction</p>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 4px;">Resources Involved</p>
+        <p id="report-resources" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">Hand Crew, Engine, Helitack</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: NARRATIVE ─────────────────────────────────────── -->
+  <section style="background:#ffffff;margin-top:2px;padding:24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6b7a6d;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid rgba(31,61,43,0.1);">Narrative</p>
+    <p id="report-narrative" style="font-size:15px;line-height:1.7;color:#2e3832;margin:0;">At approximately 1430 on 04/14/2026, crew was operating on Division Bravo near the drainage bottom when primary repeater on Pine Mountain went offline. Command net traffic ceased for all units operating below the ridge. Attempted to contact Division via IAP-listed alternate tac channel; no response. Crew observed significant fire activity upslope with no ability to transmit to Division Supervisor or adjacent Division. Duration of outage approximately 4 hours 15 minutes. Workaround attempted via secondary tac frequency; partial contact with adjacent crew but no command-level communication restored until repeater was swapped at approximately 1845.</p>
+  </section>
+
+  <!-- ── SECTION: IMMEDIATE ACTION ─────────────────────────────── -->
+  <section style="background:#ffffff;margin-top:2px;padding:24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6b7a6d;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid rgba(31,61,43,0.1);">Immediate Action Taken</p>
+    <p id="report-immediate-action" style="font-size:15px;line-height:1.7;color:#2e3832;margin:0;">Crew boss made decision to pull crew back to the previous safety zone at 1515 after third failed attempt to reach Division. Posted lookouts on high ground with hand signals to maintain visual contact with adjacent crew. Used cell phone to reach dispatch directly at 1540 to report condition and request repeater check. Held position in safety zone until 1845 when repeater was restored and verbal contact with Division reestablished.</p>
+  </section>
+
+  <!-- ── SECTION: ATTACHMENTS ───────────────────────────────────── -->
+  <section id="attachments-section" style="background:#ffffff;margin-top:2px;padding:24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6b7a6d;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid rgba(31,61,43,0.1);">Attachments</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button type="button" data-lightbox data-src="../assets/repeater_pine_mtn.jpg" data-type="image"
+        style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#faf9f6;border:1px solid #e0ddd6;width:100%;text-align:left;cursor:pointer;">
+        <div style="width:40px;height:40px;background:#1f3d2b;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5" fill="white" stroke="none"/><polyline points="21,15 16,10 5,21"/>
+          </svg>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-size:14px;font-weight:600;color:#1a2e1f;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">repeater_pine_mtn.jpg</p>
+          <p style="font-size:12px;color:#8a9490;margin:0;">2.4 MB · Image</p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#8a9490" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+          <line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/>
+        </svg>
+      </button>
+      <button type="button" data-lightbox data-src="../assets/tac_channel_log.pdf" data-type="pdf"
+        style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#faf9f6;border:1px solid #e0ddd6;width:100%;text-align:left;cursor:pointer;">
+        <div style="width:40px;height:40px;background:#3a2020;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-size:14px;font-weight:600;color:#1a2e1f;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">tac_channel_log.pdf</p>
+          <p style="font-size:12px;color:#8a9490;margin:0;">1.1 MB · PDF</p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#8a9490" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+          <line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SECTION: REPORTED BY ───────────────────────────────────── -->
+  <section style="background:#ffffff;margin-top:2px;padding:24px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6b7a6d;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid rgba(31,61,43,0.1);">Reported By</p>
+    <div>
+      <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#8a9490;margin:0 0 3px;">Agency</p>
+      <p id="report-agency" style="font-size:15px;font-weight:600;color:#1a2e1f;margin:0;">USFS</p>
+    </div>
+  </section>
+
+  <!-- ── BOTTOM BACK LINK ──────────────────────────────────────── -->
+  <div style="padding:24px;">
+    <a href="home.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#1f3d2b;text-decoration:none;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true">
+        <line x1="13" y1="8" x2="3" y2="8"/><polyline points="7,4 3,8 7,12"/>
+      </svg>
+      Return to all reports
+    </a>
+  </div>
+
+  <!-- ── LIGHTBOX ─────────────────────────────────────────────── -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.92);flex-direction:column;align-items:center;justify-content:center;" role="dialog" aria-modal="true" aria-label="File viewer">
+    <button id="lightbox-close" type="button" aria-label="Close" style="position:absolute;top:16px;right:16px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;z-index:10;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2.5" stroke-linecap="square"/>
+        <line x1="21" y1="3" x2="3" y2="21" stroke="white" stroke-width="2.5" stroke-linecap="square"/>
+      </svg>
+    </button>
+    <div id="lightbox-image-wrap" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;padding:60px 16px 16px;">
+      <img id="lightbox-img" src="" alt="Attachment" style="max-width:100%;max-height:100%;object-fit:contain;display:block;" />
+    </div>
+    <div id="lightbox-pdf-wrap" style="display:none;width:100%;height:100%;padding:60px 0 0;">
+      <iframe id="lightbox-iframe" src="" style="width:100%;height:100%;border:none;display:block;"></iframe>
+    </div>
+  </div>
+
+  <script src="../data/reports.js"></script>
+  <script>
+    // ── Nav overlay ──────────────────────────────────────────────
+    (function () {
+      var overlay  = document.getElementById('nav-overlay');
+      var openBtn  = document.getElementById('nav-open-btn');
+      var closeBtn = document.getElementById('nav-close-btn');
+      openBtn.addEventListener('click', function () { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; });
+      closeBtn.addEventListener('click', function () { overlay.style.display = 'none'; document.body.style.overflow = ''; });
+    })();
+
+    // ── Load report data ─────────────────────────────────────────
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      if (!id) return;
+
+      let r = null;
+      if (id.startsWith('report-')) {
+        const reports = JSON.parse(localStorage.getItem('safenet_reports') || '[]');
+        r = reports.find(x => x.id === id);
+      } else if (id.startsWith('old-') && typeof SAFENET_REPORTS !== 'undefined') {
+        r = SAFENET_REPORTS.find(x => x.id === id);
+      }
+      if (!r) return;
+
+      document.title = `SAFENET — ${r.name}`;
+      const set = (elId, val) => { const el = document.getElementById(elId); if (el) el.textContent = val || '—'; };
+
+      set('report-name', r.name);
+      set('report-meta', r.meta || '—');
+      set('report-date', r.displayDate || '');
+
+      if (id.startsWith('old-')) {
+        set('report-start', r.displayDate || '—');
+        set('report-stop', '—');
+        set('report-local-unit', r.localUnit || '—');
+        set('report-incident-type', Array.isArray(r.incidentType) ? r.incidentType.join(', ') : (r.incidentType || '—'));
+        set('report-incident-activity', Array.isArray(r.incidentActivity) ? r.incidentActivity.join(', ') : (r.incidentActivity || '—'));
+        set('report-stage', Array.isArray(r.incidentStage) ? r.incidentStage.join(', ') : (r.incidentStage || '—'));
+        set('report-mgmt-level', r.mgmtLevel || '—');
+        set('report-task', r.task || '—');
+        set('report-resources', r.resources || '—');
+      } else {
+        set('report-start', [r.startDate, r.startTime].filter(Boolean).join(' ') || '—');
+        set('report-stop',  [r.stopDate,  r.stopTime ].filter(Boolean).join(' ') || '—');
+        set('report-local-unit', r.localUnit);
+        set('report-incident-type', r.incidentType || '—');
+        set('report-incident-activity', r.incidentActivity || '—');
+        set('report-stage', r.incidentStage || '—');
+        set('report-mgmt-level', r.mgmtLevel);
+        set('report-task', r.task);
+        set('report-resources', r.resources);
+      }
+
+      set('report-narrative', r.narrative || '—');
+      set('report-immediate-action', r.immediateAction || '—');
+      set('report-agency', r.agency);
+
+      const tagsEl = document.getElementById('report-tags');
+      if (r.factors && r.factors.length) {
+        tagsEl.innerHTML = r.factors.map(f =>
+          `<div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="background:#492629;padding:6px 12px;font-size:12px;letter-spacing:-0.3px;color:#faf9f6;">${f}</span>
+          </div>`
+        ).join('');
+      }
+
+      const attachEl = document.getElementById('attachments-section');
+      if (attachEl) attachEl.style.display = 'none';
+    })();
+
+    // ── Lightbox ─────────────────────────────────────────────────
+    (function () {
+      var lb       = document.getElementById('lightbox');
+      var closeBtn = document.getElementById('lightbox-close');
+      var imgWrap  = document.getElementById('lightbox-image-wrap');
+      var img      = document.getElementById('lightbox-img');
+      var pdfWrap  = document.getElementById('lightbox-pdf-wrap');
+      var iframe   = document.getElementById('lightbox-iframe');
+
+      function openLightbox(src, type) {
+        imgWrap.style.display = 'none';
+        pdfWrap.style.display = 'none';
+        if (type === 'image') { img.src = src; imgWrap.style.display = 'flex'; }
+        else { iframe.src = src; pdfWrap.style.display = 'block'; }
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lb.style.display = 'none';
+        document.body.style.overflow = '';
+        img.src = ''; iframe.src = '';
+      }
+
+      document.querySelectorAll('[data-lightbox]').forEach(function (btn) {
+        btn.addEventListener('click', function () { openLightbox(btn.dataset.src, btn.dataset.type); });
+      });
+      closeBtn.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!-- ============================================================
+  SAFENET Dictate Button — snippet library
+  Toggles between Inactive and Listening states.
+  aria-pressed="false" = inactive, aria-pressed="true" = listening.
+
+  Interactive toggle handled by inline JS in styleguide only.
+  In production, wire button click to aria-pressed + recording API.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  DICTATE BUTTON — INACTIVE (DEFAULT)
+  56px tall (touch-min), surface-elevated fill, border-strong.
+=================================================================== -->
+<button type="button" aria-pressed="false"
+  class="h-touch-min px-space-3 inline-flex items-center gap-space-2
+         bg-surface-elevated border border-border-strong
+         text-body text-text-primary font-sans
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+
+  <!-- Mic icon -->
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+    <rect x="7" y="2" width="6" height="10" rx="0"/>
+    <path d="M4 10c0 3.314 2.686 6 6 6s6-2.686 6-6" stroke-linecap="butt"/>
+    <line x1="10" y1="16" x2="10" y2="19"/>
+    <line x1="7" y1="19" x2="13" y2="19"/>
+  </svg>
+
+  Dictate
+</button>
+
+
+<!-- ===================================================================
+  DICTATE BUTTON — LISTENING
+=================================================================== -->
+<button type="button" aria-pressed="true"
+  class="h-touch-min px-space-3 inline-flex items-center gap-space-2
+         bg-action-primary border border-transparent
+         text-body text-on-action-primary font-sans
+         focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+
+  <!-- Mic icon -->
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+    <rect x="7" y="2" width="6" height="10" rx="0"/>
+    <path d="M4 10c0 3.314 2.686 6 6 6s6-2.686 6-6" stroke-linecap="butt"/>
+    <line x1="10" y1="16" x2="10" y2="19"/>
+    <line x1="7" y1="19" x2="13" y2="19"/>
+  </svg>
+
+  Stop
+</button>

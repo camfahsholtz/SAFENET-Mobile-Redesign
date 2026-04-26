@@ -1,0 +1,347 @@
+<!-- ============================================================
+  SAFENET Filter Sheet Component — snippet library
+  Full-screen modal for editing the home screen's report filters.
+  Opened by tapping the "Filter" button in the Filter Bar.
+
+  Structure:
+    1. Sticky header — 56px; close × (left), title (center), Reset all (right)
+    2. Scrolling content — 6 filter sections, py-space-6 px-space-5
+    3. Sticky footer — Apply filters primary button (64px, full width)
+
+  Production: outer container is fixed inset-0 z-50 flex flex-col.
+  flex-1 overflow-y-auto on the content area provides the scroll;
+  header and footer are flex-none, so they never scroll away.
+
+  Composes: Input Chip, Date Trigger, Text Input, Button.
+  ============================================================ -->
+
+
+<!-- ===================================================================
+  FILTER SHEET — DEFAULT STATE
+  Preset: Last 30 days selected. State: California + Oregon.
+  Contributing Factors: Communications selected. Incident Type: Wildland.
+=================================================================== -->
+<div class="fixed inset-0 z-50 flex flex-col bg-surface">
+
+  <!-- ── STICKY HEADER ─────────────────────────────────────────── -->
+  <header class="flex-none h-touch-min relative flex items-center border-b border-border bg-surface">
+    <!-- Close -->
+    <button type="button" aria-label="Close filters"
+      class="absolute left-0 w-touch-min h-touch-min flex items-center justify-center
+             text-text-primary
+             focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+    <!-- Title -->
+    <h2 class="w-full text-center text-heading-md text-text-primary">Filters</h2>
+    <!-- Reset all — clears all filter selections, does NOT close the sheet -->
+    <button type="button"
+      class="absolute right-0 h-touch-min px-space-5 flex items-center
+             text-body font-semibold text-action-primary
+             focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+      Reset all
+    </button>
+  </header>
+
+  <!-- ── SCROLLING CONTENT ─────────────────────────────────────── -->
+  <div class="flex-1 overflow-y-auto px-space-5 py-space-6">
+    <div class="flex flex-col gap-space-7">
+
+      <!-- SECTION 1: DATE RANGE ─────────────────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">DATE RANGE</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">When did the event occur?</p>
+        <div class="mt-space-3 flex flex-wrap gap-space-2" role="group" aria-label="Date range">
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Last 7 days
+          </button>
+          <!-- Last 30 days — default selected -->
+          <button type="button" aria-pressed="true"
+            class="h-touch-min px-space-3
+                   bg-action-primary border border-transparent
+                   text-body text-on-action-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Last 30 days
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Last 90 days
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Custom range
+          </button>
+        </div>
+        <!-- Custom date pickers — shown only when Custom range is aria-pressed="true" -->
+        <!-- [Rendered separately in the styleguide custom-range example below] -->
+      </div>
+
+      <!-- SECTION 2: STATE ──────────────────────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">STATE</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">Limit results to specific states</p>
+        <div class="mt-space-3">
+          <button type="button" aria-label="Select states — California, Oregon selected"
+            class="h-touch-min px-space-4 w-full font-sans rounded-none
+                   bg-surface border border-border-strong
+                   text-body text-text-primary text-left flex items-center justify-between
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+            <span>California, Oregon</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+              <polyline points="7,4 13,10 7,16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 3: CONTRIBUTING FACTORS ─────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">CONTRIBUTING FACTORS</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">What kinds of failures? Select all that apply</p>
+        <div class="mt-space-3 flex flex-wrap gap-space-2" role="group" aria-label="Contributing Factors">
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Fire Behavior
+          </button>
+          <button type="button" aria-pressed="true"
+            class="h-touch-min px-space-3
+                   bg-action-primary border border-transparent
+                   text-body text-on-action-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Communications
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Equipment
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Environmental
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Human Factors
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Other
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 4: JURISDICTION ──────────────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">JURISDICTION</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">Which agency owns the land?</p>
+        <div class="mt-space-3 flex flex-wrap gap-space-2" role="group" aria-label="Jurisdiction">
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            BIA
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            BLM
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            FWS
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            NPS
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            USFS
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            State
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Other
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Unknown
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 5: INCIDENT TYPE ─────────────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">INCIDENT TYPE</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">What kind of incident?</p>
+        <div class="mt-space-3 flex flex-wrap gap-space-2" role="group" aria-label="Incident Type">
+          <button type="button" aria-pressed="true"
+            class="h-touch-min px-space-3
+                   bg-action-primary border border-transparent
+                   text-body text-on-action-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Wildland
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Prescribed/Fuels Treatment
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            All Hazard
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Training
+          </button>
+          <button type="button" aria-pressed="false"
+            class="h-touch-min px-space-3
+                   bg-surface border border-border-strong
+                   text-body text-text-primary
+                   flex items-center justify-center whitespace-nowrap rounded-none font-sans
+                   transition-colors hover:bg-surface-container active:bg-surface-container-pressed
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface">
+            Work Capacity Test
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 6: SEARCH ────────────────────────────────────── -->
+      <div>
+        <p class="text-overline text-text-secondary uppercase">SEARCH</p>
+        <p class="mt-space-1 text-body-sm text-text-secondary">Search across narrative, incident name, and location</p>
+        <div class="mt-space-3">
+          <input
+            type="text"
+            placeholder="Enter keyword or phrase"
+            class="h-touch-min px-space-4 w-full font-sans rounded-none
+                   bg-surface border border-border-strong
+                   text-body text-text-primary placeholder:text-text-secondary
+                   focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2
+                   disabled:bg-surface-container disabled:border-0 disabled:text-text-disabled
+                   disabled:placeholder:text-text-disabled disabled:cursor-not-allowed"
+          />
+        </div>
+      </div>
+
+    </div><!-- end sections -->
+  </div><!-- end scrolling content -->
+
+  <!-- ── STICKY FOOTER ─────────────────────────────────────────── -->
+  <footer class="flex-none border-t border-border-strong p-space-5 bg-surface">
+    <button type="button"
+      class="h-touch-primary w-full font-sans rounded-none flex items-center justify-center
+             bg-action-primary text-on-action-primary text-body-lg font-semibold
+             transition-colors hover:bg-action-primary-hover active:bg-action-primary-pressed
+             focus-visible:outline-none focus-visible:ring focus-visible:ring-action-primary focus-visible:ring-offset-2">
+      Apply filters
+    </button>
+  </footer>
+
+</div>
